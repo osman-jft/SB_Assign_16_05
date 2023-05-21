@@ -19,4 +19,6 @@ public class StudentDTO {
 
     Double marks;
 
+    Integer rank;
+
 }
