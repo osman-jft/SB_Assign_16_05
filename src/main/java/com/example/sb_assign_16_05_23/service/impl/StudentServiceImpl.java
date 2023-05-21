@@ -42,4 +42,18 @@ public class StudentServiceImpl implements StudentService {
 
         //create impl class also
     }
+
+    @Override
+    public List<StudentDTO> getStudentsGreaterThan(double value) {
+        //Retrieve values through Student Repository that are greater than a particular value
+        List<Student> students = studentRepository.findByMarksGreaterThan(value);
+
+        //Convert Values to StudentDTO
+        List<StudentDTO> studentDTOS = students
+                .stream()
+                .map(student -> modelMapper.map(student, StudentDTO.class))
+                .collect(Collectors.toList());
+        //Return those particular studentDTOS
+        return studentDTOS;
+    }
 }
