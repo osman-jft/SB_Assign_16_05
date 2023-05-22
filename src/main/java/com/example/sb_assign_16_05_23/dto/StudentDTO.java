@@ -1,5 +1,8 @@
 package com.example.sb_assign_16_05_23.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +18,13 @@ public class StudentDTO {
     //the fields of DTO match the Entity; "Student" in this case
     Long id;
 
+    @NotNull(message = "Name can not be null")
     String name;
 
+
+    @Min(0) @Max(600) @NotNull(message = "Marks are required")
     Double marks;
+
+    Integer ranks = 0;
 
 }

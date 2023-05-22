@@ -27,4 +27,7 @@ public class Student {
     @Column(name = "marks")
     private Double marks;
 
+    @Column(name = "students_rank")
+    private Integer studentsRank;
+
 }
