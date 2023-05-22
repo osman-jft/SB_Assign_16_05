@@ -7,4 +7,7 @@ import java.util.List;
 public interface StudentService {
 
     List<StudentDTO> getAllStudents();
+    List<StudentDTO> sortAccordingToRank();
+    List<StudentDTO> sortAccordingTo(String sortField);
+
     }

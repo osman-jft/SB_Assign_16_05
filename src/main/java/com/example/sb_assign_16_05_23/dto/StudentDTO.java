@@ -11,12 +11,10 @@ public class StudentDTO {
 
     //student DTO (Data Transfer Object) to transfer data from DB between different layers of the application
     //namely controller, service, entity, etc.
-
     //the fields of DTO match the Entity; "Student" in this case
-    Long id;
-
-    String name;
-
-    Double marks;
+    private Long id;
+    private String name;
+    private Double marks;
+    private Integer studentRank;
 
 }
