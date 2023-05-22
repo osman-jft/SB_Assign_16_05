@@ -1,6 +1,6 @@
-package com.example.sb_assign_16_05_23.dto;
+package com.example.sb_assign_16_05_23.dto.SubjectResponse;
 
-
+import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +14,5 @@ public class SubjectDTO {
 
     String name;
 
-    String teacherName;
+    TeacherDTO teacherDTO;
 }

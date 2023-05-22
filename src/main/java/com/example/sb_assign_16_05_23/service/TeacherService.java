@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.service;
 
+import com.example.sb_assign_16_05_23.dto.SubjectDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Teacher;
 import org.springframework.http.ResponseEntity;
@@ -11,5 +12,7 @@ public interface TeacherService {
     List<TeacherDTO> getAllTeachers();
 
     ResponseEntity<String> setTeachers(Teacher teacherData);
+
+
 }
 

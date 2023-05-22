@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
+import com.example.sb_assign_16_05_23.dto.SubjectDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Teacher;
 import com.example.sb_assign_16_05_23.repository.TeacherRepository;
@@ -42,4 +43,6 @@ public class TeacherServiceImpl implements TeacherService {
         teacherRepository.save(teacherData);
         return ResponseEntity.ok("Data Saved");
     }
+
+
 }

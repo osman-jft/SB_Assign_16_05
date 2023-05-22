@@ -1,6 +1,7 @@
 package com.example.sb_assign_16_05_23.controller;
 
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
+import com.example.sb_assign_16_05_23.dto.SubjectDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Teacher;
 import com.example.sb_assign_16_05_23.service.StudentService;
@@ -31,4 +32,6 @@ public class TeacherController {
     private ResponseEntity<String> setTeachers(@RequestBody Teacher teacherData) {
         return teacherService.setTeachers(teacherData);
     }
+
+
 }
