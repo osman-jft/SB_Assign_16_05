@@ -19,7 +19,7 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
     @GetMapping("/subject/{name}")
-    private SubjectDTO getSubjectsByName(@PathVariable String name){
+    private SubjectDTO getSubjectByName(@PathVariable String name){
         return subjectService.getSubjectandTeacherName(name);
     }
 }
