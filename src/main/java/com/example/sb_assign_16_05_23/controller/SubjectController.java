@@ -1,6 +1,7 @@
 package com.example.sb_assign_16_05_23.controller;
 
 import com.example.sb_assign_16_05_23.dto.SubjectDTO;
+import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,11 @@ public class SubjectController {
      */
     @Autowired
     SubjectService subjectService;
+    @GetMapping("/subjects")
+    private List<SubjectDTO> getAllSubjects()
+    {
+        return subjectService.getAllSubject();
+    }
     @GetMapping("/subject/{name}")
     private SubjectDTO getSubjectByName(@PathVariable String name){
         return subjectService.getSubjectandTeacherName(name);

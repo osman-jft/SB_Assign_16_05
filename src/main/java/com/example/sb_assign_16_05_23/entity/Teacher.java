@@ -28,5 +28,7 @@ public class Teacher {
     @JsonManagedReference
     private List<Subject> subjects;
 
+
+
 // constructors, getters and setters
 }
