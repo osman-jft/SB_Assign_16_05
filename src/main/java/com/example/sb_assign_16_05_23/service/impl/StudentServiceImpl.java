@@ -7,7 +7,6 @@ import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,6 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    @Qualifier("getModelMapper")
     @Autowired
     ModelMapper modelMapper;
 
