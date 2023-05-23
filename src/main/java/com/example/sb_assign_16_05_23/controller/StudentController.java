@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/students/")
 public class StudentController {
 
     //student controller to create endpoint /api/students
@@ -18,7 +18,7 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping("/students")
+    @GetMapping("/")
     private List<StudentDTO> getStudents() {
 
         //returns list of students from StudentService

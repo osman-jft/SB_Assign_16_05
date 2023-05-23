@@ -19,7 +19,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     TeacherRepository teacherRepository;
 
-    @Qualifier("getNewModelMapper")
     @Autowired
     ModelMapper modelMapper;
 

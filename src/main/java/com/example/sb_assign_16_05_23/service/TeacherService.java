@@ -12,3 +12,4 @@ public interface TeacherService {
 
     ResponseEntity<String> setTeachers(Teacher teacherData);
 }
+
