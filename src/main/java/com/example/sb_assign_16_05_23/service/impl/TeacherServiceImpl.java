@@ -1,12 +1,12 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
+import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.entity.Teacher;
 import com.example.sb_assign_16_05_23.repository.TeacherRepository;
 import com.example.sb_assign_16_05_23.service.TeacherService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +37,26 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseEntity<String> setTeachers(Teacher teacherData){
-        teacherRepository.save(teacherData);
+    public ResponseEntity<String> setTeachers(TeacherDTO teacherData){
+
+        Teacher teacher =  modelMapper.map(teacherData, Teacher.class);
+        List<Subject> subjects = teacherData.getSubjects()
+                .stream()
+                .map(subject -> modelMapper.map(subject, Subject.class))
+                        .collect(Collectors.toList());
+
+        subjects.forEach(subject -> subject.setTeacher(teacher));
+        teacher.setSubjects(subjects);
+        teacherRepository.save(teacher);
+
+        return ResponseEntity.ok("Data Saved");
+    }
+
+    @Override
+    public ResponseEntity<String> setAll(List<TeacherDTO> teacherData) {
+        for(TeacherDTO teacher: teacherData){
+            setTeachers(teacher);
+        }
         return ResponseEntity.ok("Data Saved");
     }
 }

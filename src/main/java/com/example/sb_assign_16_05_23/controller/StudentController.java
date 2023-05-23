@@ -18,7 +18,7 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping()
+    @GetMapping
     private List<StudentDTO> getStudents() {
 
         //returns list of students from StudentService

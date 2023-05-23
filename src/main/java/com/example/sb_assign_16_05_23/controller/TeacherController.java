@@ -20,15 +20,21 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    @GetMapping()
+    @GetMapping
     private List<TeacherDTO> getTeachers() {
 
         //returns list of teachers from TeacherService
         return teacherService.getAllTeachers();
     }
 
-    @PostMapping()
-    private ResponseEntity<String> setTeachers(@RequestBody Teacher teacherData) {
+    @PostMapping
+    private ResponseEntity<String> setTeachers(@RequestBody TeacherDTO teacherData) {
         return teacherService.setTeachers(teacherData);
+    }
+
+    @PostMapping("/list")
+    private ResponseEntity<String> setAll(@RequestBody List<TeacherDTO> teacherData) {
+
+        return teacherService.setAll(teacherData);
     }
 }
