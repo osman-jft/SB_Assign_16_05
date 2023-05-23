@@ -19,12 +19,12 @@ public class StudentDTO {
     Long id;
 
     @NotNull(message = "Name can not be null")
-    String name;
+    String studentName;
 
 
     @Min(0) @Max(600) @NotNull(message = "Marks are required")
     Double marks;
 
-    Integer ranks = 0;
+    Integer studentRank = 0;
 
 }

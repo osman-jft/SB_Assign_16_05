@@ -7,10 +7,16 @@ import com.example.sb_assign_16_05_23.service.StudentService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,29 +50,45 @@ public class StudentServiceImpl implements StudentService {
 
         }
 
-        // save student to db
-        @Override
-    public StudentDTO registerStudent(@Valid StudentDTO sDto) {
-        Student students = new Student();
 
-        students.setStudentName(sDto.getName());
-        students.setMarks(sDto.getMarks());
-        students.setStudentsRank(sDto.getRanks());
-        studentRepository.save(students);
-        // recalculate the rank
-        calculateRank();
+    @Override
+    public List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos){
+        List<Student> students = calculateRank(studentDtos);
+        // return the dtos List with allocated id and rank
+        List<StudentDTO> newStudentDtos = new ArrayList<>();
 
-        sDto.setRanks(students.getStudentsRank());
-        sDto.setId(students.getId());
-        return sDto;
+        for(Student s : students){
+            // if id=null then it is new student obj which is not registered yet
+            if(s.getId() == null){
+                studentRepository.save(s);
+                StudentDTO dto = new StudentDTO();
+                BeanUtils.copyProperties(s, dto); // copy the allocated id and rank to dto
+                newStudentDtos.add(dto);
+            } else {
+                studentRepository.save(s);
+            }
+        }
+        return newStudentDtos;
     }
 
 
     // recalculate rank
     @Override
-    public void calculateRank() {
-        List<Student> students = studentRepository.findAllByMarks();
-        System.out.println(students);
+    public List<Student> calculateRank(List<StudentDTO> studentDtos) {
+        // get student list sorted by marks
+          List<Student> students = studentRepository.findAll(Sort.by("marks").descending());
+          List<Student> newStudents = new ArrayList<>();
+
+          // map the dto to entity obj
+          for(StudentDTO s : studentDtos){
+              Student student = new Student();
+              BeanUtils.copyProperties(s, student);
+              newStudents.add(student);
+          }
+
+          // add and sort the students list
+        students.addAll(newStudents);
+        Collections.sort(students, (s1,s2) -> s2.getMarks().compareTo(s1.getMarks()));
 
         if (!students.isEmpty()) {
             double prevMarks = 0;
@@ -75,27 +97,27 @@ public class StudentServiceImpl implements StudentService {
 
             for (Student s : students) {
                 if (i == 0) { // initial case
-                    s.setStudentsRank(1);
+                    s.setStudentRank(1);
                     i++;
                 } else {
                     if (prevMarks == s.getMarks()) { // check prev marks == current marks
                         // for the first matching pair
                         if (prevRank != -1) {
-                            s.setStudentsRank(prevRank);
+                            s.setStudentRank(prevRank);
                         } else {
                             prevRank = i;
-                            s.setStudentsRank(i);
+                            s.setStudentRank(i);
                         }
                     } else {
                         i++;
                         prevRank = i;
-                        s.setStudentsRank(i);
+                        s.setStudentRank(i);
                     }
                 }
                 prevMarks = s.getMarks();
-                studentRepository.save(s);
             }
         }
 
+        return students;
     }
 }

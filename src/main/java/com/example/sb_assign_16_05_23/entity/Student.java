@@ -21,13 +21,13 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "studentName")
+    @Column(name = "student_name")
     private String studentName;
 
     @Column(name = "marks")
     private Double marks;
 
-    @Column(name = "students_rank")
-    private Integer studentsRank;
+    @Column(name = "student_rank")
+    private Integer studentRank;
 
 }

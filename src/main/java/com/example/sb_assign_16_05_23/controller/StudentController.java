@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/students")
 public class StudentController {
 
     //student controller to create endpoint /api/students
@@ -18,37 +18,23 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping("/students")
+    @GetMapping
     private ResponseEntity<?> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
         if(studentDto == null){
-            ResponseEntity.accepted().body("DB is empty");
+            return ResponseEntity.accepted().body("Students list is empty");
         }
         //returns list of students from StudentService
         return ResponseEntity.accepted().body(studentDto);
     }
 
 
-    @PostMapping("/students")
-    public ResponseEntity<?> registerStudents(@Valid @RequestBody StudentDTO studentDto){
-        if(studentDto != null){
-            StudentDTO sDto = studentService.registerStudent(studentDto);
-            return ResponseEntity.accepted().body(sDto);
-        }
+    @PostMapping("/list")
+    public ResponseEntity<?> registerStudentsList(@RequestBody @Valid List<StudentDTO> studentDtos){
+        if(studentDtos != null){
+            List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
 
-
-        return ResponseEntity.accepted().body("Failed to register student");
-
-    }
-
-    @PostMapping("/studentslist")
-    public ResponseEntity<?> registerStudentsList(@RequestBody @Valid List<StudentDTO> studentDTOS){
-        if(studentDTOS != null){
-            for(StudentDTO s : studentDTOS){
-                StudentDTO sDto = studentService.registerStudent(s);
-            }
-
-            return ResponseEntity.accepted().body(studentDTOS);
+            return ResponseEntity.accepted().body(dtos);
         }
         return ResponseEntity.accepted().body("Students List does not register to DB");
     }
