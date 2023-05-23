@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/teachers/")
+@RequestMapping("/api/teachers")
 public class TeacherController {
 
     //teacher controller to create endpoint /api/teachers
@@ -20,14 +20,14 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    @GetMapping("/")
+    @GetMapping()
     private List<TeacherDTO> getTeachers() {
 
         //returns list of teachers from TeacherService
         return teacherService.getAllTeachers();
     }
 
-    @PostMapping("/")
+    @PostMapping()
     private ResponseEntity<String> setTeachers(@RequestBody Teacher teacherData) {
         return teacherService.setTeachers(teacherData);
     }
