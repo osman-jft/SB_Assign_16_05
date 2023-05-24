@@ -1,6 +1,5 @@
 package com.example.sb_assign_16_05_23.dto;
 
-import com.example.sb_assign_16_05_23.entity.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
