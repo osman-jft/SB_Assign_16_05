@@ -1,10 +1,13 @@
 package com.example.sb_assign_16_05_23.controller;
 
+import com.example.sb_assign_16_05_23.dto.ValidList;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
+import com.example.sb_assign_16_05_23.errors.BadRequestErrorException;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,12 +33,15 @@ public class StudentController {
 
 
     @PostMapping("/list")
-    public ResponseEntity<?> registerStudentsList(@RequestBody @Valid List<StudentDTO> studentDtos){
-        if(studentDtos != null){
-            List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
+    public ResponseEntity<?> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos,
+                                                  BindingResult errors){
 
-            return ResponseEntity.accepted().body(dtos);
+        if(errors.hasErrors()){
+            throw new BadRequestErrorException(errors.toString());
         }
-        return ResponseEntity.accepted().body("Students List does not register to DB");
+        List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
+        return ResponseEntity.accepted().body(dtos);
     }
+
 }
+

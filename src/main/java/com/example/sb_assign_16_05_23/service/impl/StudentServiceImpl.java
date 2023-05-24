@@ -77,17 +77,15 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> calculateRank(List<StudentDTO> studentDtos) {
         // get student list sorted by marks
           List<Student> students = studentRepository.findAll(Sort.by("marks").descending());
-          List<Student> newStudents = new ArrayList<>();
 
-          // map the dto to entity obj
-          for(StudentDTO s : studentDtos){
-              Student student = new Student();
-              BeanUtils.copyProperties(s, student);
-              newStudents.add(student);
-          }
-
+          students.addAll(
+                  studentDtos.stream().map(s -> {
+                      Student newS = new Student();
+                      BeanUtils.copyProperties(s, newS);
+                      return newS;
+                  }).collect(Collectors.toList())
+          );
           // add and sort the students list
-        students.addAll(newStudents);
         Collections.sort(students, (s1,s2) -> s2.getMarks().compareTo(s1.getMarks()));
 
         if (!students.isEmpty()) {
