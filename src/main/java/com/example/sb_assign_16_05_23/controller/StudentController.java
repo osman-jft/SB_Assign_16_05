@@ -19,14 +19,14 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping
+    @GetMapping("/list")
     private List<StudentDTO> getStudents() {
 
         //returns list of students from StudentService
         return studentService.getAllStudents();
     }
-    @GetMapping("/students/greaterthan/{value}")
-    private List<StudentDTO> getStudentsGreaterThan(@PathVariable double value){
+    @GetMapping("/greater/{value}")
+    private List<StudentDTO> getStudentsGreaterThan(@PathVariable Double value){
         return  studentService.getStudentsGreaterThan(value);
     }
 }

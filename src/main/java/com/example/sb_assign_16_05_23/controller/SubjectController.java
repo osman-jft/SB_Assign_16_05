@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/subject")
 public class SubjectController {
     /*
     6.2. Create a get api to accept a subject name and return corresponding teacher's name.
      */
     @Autowired
     SubjectService subjectService;
-    @GetMapping("/subjects")
+    @GetMapping("/list")
     private List<SubjectDTO> getAllSubjects()
     {
         return subjectService.getAllSubject();
     }
-    @GetMapping("/subject/{name}")
+    @GetMapping("/{name}")
     private SubjectDTO getSubjectByName(@PathVariable String name){
         return subjectService.getSubjectandTeacherName(name);
     }
