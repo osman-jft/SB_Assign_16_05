@@ -10,9 +10,7 @@ import java.util.List;
 public interface TeacherService {
 
     List<TeacherDTO> getAllTeachers();
-
-    ResponseEntity<String> setTeachers(Teacher teacherData);
-
-
+    ResponseEntity<String> setTeachers(TeacherDTO teacherData);
+    ResponseEntity<String> setAll(List<TeacherDTO> teacherData);
 }
 
