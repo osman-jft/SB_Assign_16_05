@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.controller;
 
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping
-    private List<StudentDTO> getStudents() {
+    private ResponseDTO<StudentDTO> getStudents() {
 
         //returns list of students from StudentService
         return studentService.getAllStudents();
