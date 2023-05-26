@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseDTO<T> {
-    private List<T> data;
+    private List<?> data;
     private String status;
     private String message;
 }

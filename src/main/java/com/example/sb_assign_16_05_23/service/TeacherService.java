@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface TeacherService {
 
-    ResponseDTO<TeacherDTO> getAllTeachers();
-    ResponseDTO<TeacherDTO> setTeachers(TeacherDTO teacherData);
+    ResponseDTO<?> getAllTeachers();
+    ResponseDTO<?> setTeachers(TeacherDTO teacherData);
 
-    ResponseDTO<TeacherDTO> setAll(List<TeacherDTO> teacherData);
+    ResponseDTO<?> setAll(List<TeacherDTO> teacherData);
 }
 

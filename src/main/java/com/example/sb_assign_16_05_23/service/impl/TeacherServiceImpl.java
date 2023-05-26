@@ -8,6 +8,7 @@ import com.example.sb_assign_16_05_23.repository.TeacherRepository;
 import com.example.sb_assign_16_05_23.service.TeacherService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class
-TeacherServiceImpl extends MapperServiceImpl implements TeacherService {
+TeacherServiceImpl implements TeacherService {
 
     @Autowired
     TeacherRepository teacherRepository;
@@ -24,14 +25,18 @@ TeacherServiceImpl extends MapperServiceImpl implements TeacherService {
     @Autowired
     List<Teacher> teacherList;
 
+    @Qualifier("mapperServiceImpl")
+    @Autowired
+    MapperServiceImpl mapperService;
+
 
 
     public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
 
-        Teacher teacher =  (Teacher)super.Mapper(teacherData, Teacher.class);
+        Teacher teacher =  (Teacher) mapperService.Mapper(teacherData, Teacher.class);
         List<Subject> subjects = teacherData.getSubjects()
                 .stream()
-                .map(subject -> (Subject)super.Mapper(subject, Subject.class))
+                .map(subject -> (Subject)mapperService.Mapper(subject, Subject.class))
                 .collect(Collectors.toList());
 
         subjects.forEach(subject -> subject.setTeacher(teacher));
@@ -42,29 +47,29 @@ TeacherServiceImpl extends MapperServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseDTO<TeacherDTO> getAllTeachers() {
+    public ResponseDTO<?> getAllTeachers() {
 
         List<Teacher> teachers = teacherRepository.findAll();
 
-        return getResponseDTO(teachers, "All Teachers Retrieved From Database");
+        return mapperService.getResponseDTO(teachers, "All Teachers Retrieved From Database");
     }
 
     @Override
-    public ResponseDTO<TeacherDTO> setTeachers(TeacherDTO teacherData){
+    public ResponseDTO<?> setTeachers(TeacherDTO teacherData){
 
         Teacher teacher = teacherDTOToTeacher(teacherData);
-        List<TeacherDTO> teacherDTO = Collections.singletonList((TeacherDTO) super.Mapper(teacher, TeacherDTO.class));
+        List<TeacherDTO> teacherDTO = Collections.singletonList((TeacherDTO) mapperService.Mapper(teacher, TeacherDTO.class));
 
-        return getResponseDTO(teacherDTO, "Teacher added to Database");
+        return mapperService.getResponseDTO(teacherDTO, "Teacher added to Database");
     }
 
     @Override
-    public ResponseDTO<TeacherDTO> setAll(List<TeacherDTO> teacherData) {
+    public ResponseDTO<?> setAll(List<TeacherDTO> teacherData) {
 
         for(TeacherDTO teacherD: teacherData){
             teacherList.add(teacherDTOToTeacher(teacherD));
         }
-        return getResponseDTO(teacherList, "List of Teachers added to Database");
+        return mapperService.getResponseDTO(teacherList, "List of Teachers added to Database");
 
     }
 }

@@ -21,16 +21,13 @@ public class MapperServiceImpl {
     ModelMapper modelMapper;
 
     @Autowired
-    ResponseDTO responseDTO;
+    ResponseDTO<?> responseDTO;
 
     public Object Mapper(Object object, Class<?> type) {
-
-        Object converted = modelMapper.map(object,type);
-        return converted;
-
+        return  modelMapper.map(object,type);
     }
 
-    public ResponseDTO getResponseDTO(List<?> data, String message) {
+    public ResponseDTO<?> getResponseDTO(List<?> data, String message) {
         responseDTO.setData(data);
         responseDTO.setStatus(+HttpStatus.OK.value()+" "+ HttpStatus.OK.getReasonPhrase());
         responseDTO.setMessage(message);
