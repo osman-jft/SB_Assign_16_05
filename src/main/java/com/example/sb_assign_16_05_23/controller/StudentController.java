@@ -5,7 +5,9 @@ import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.errors.BadRequestErrorException;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import jakarta.validation.Valid;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -33,14 +35,9 @@ public class StudentController {
 
 
     @PostMapping("/list")
-    public ResponseEntity<?> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos,
-                                                  BindingResult errors){
-
-        if(errors.hasErrors()){
-            throw new BadRequestErrorException(errors.toString());
-        }
+    public ResponseEntity<?> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos){
         List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
-        return ResponseEntity.accepted().body(dtos);
+        return new ResponseEntity<>(dtos, HttpStatus.CREATED);
     }
 
 }

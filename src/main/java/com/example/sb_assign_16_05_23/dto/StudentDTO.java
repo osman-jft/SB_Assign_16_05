@@ -12,14 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentDTO {
-    //student DTO (Data Transfer Object) to transfer data from DB between different layers of the application
-    //namely controller, service, entity, etc.
-
-    //the fields of DTO match the Entity; "Student" in this case
+    //the fields of DTO should match the entity's field
     Long id;
 
     @NotNull(message = "Name can not be null")
-            @NotBlank(message = "Name can not be blank")
+    @NotBlank(message = "Name can not be blank")
     String studentName;
 
     @Min(0) @Max(600) @NotNull(message = "Marks are required")

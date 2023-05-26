@@ -11,17 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ValidList<T> implements List<T> {
     @Valid
     @Delegate
-    private List<T> list ;
-
-    public ValidList() {
-        this.list = new ArrayList<T>();
-    }
-
-    public ValidList(List<T> list) {
-        this.list = list;
-    }
+    private List<T> list = new ArrayList<>();
 
 }

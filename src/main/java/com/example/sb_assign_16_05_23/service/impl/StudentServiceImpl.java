@@ -34,7 +34,6 @@ public class StudentServiceImpl implements StudentService {
 
         //create a List of Student type & store all db entries into it
         List<Student> students = studentRepository.findAll();
-
         //using ModelMapper we map each individual member of the list of students to the DTO & cache it to be used
         //by the different layers in the application
         if(students.isEmpty()){
@@ -53,20 +52,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos){
         List<Student> students = calculateRank(studentDtos);
-        // return the dtos List with allocated id and rank
-        List<StudentDTO> newStudentDtos = new ArrayList<>();
+        List<StudentDTO> newStudentDtos = new ArrayList<>();// return the dtos List with allocated id and rank
 
-        for(Student s : students){
-            // if id=null then it is new student obj which is not registered yet
-            if(s.getId() == null){
+        students.forEach(s -> {
+            if(s.getId() == null){ // if id=null then it is new student obj which is not registered yet
                 studentRepository.save(s);
-                StudentDTO dto = new StudentDTO();
-                BeanUtils.copyProperties(s, dto); // copy the allocated id and rank to dto
-                newStudentDtos.add(dto);
-            } else {
-                studentRepository.save(s);
-            }
-        }
+                newStudentDtos.add(modelMapper.map(s, StudentDTO.class));
+            } else studentRepository.save(s);
+        });
+
         return newStudentDtos;
     }
 
@@ -74,18 +68,12 @@ public class StudentServiceImpl implements StudentService {
     // recalculate rank
     @Override
     public List<Student> calculateRank(List<StudentDTO> studentDtos) {
-        // get student list sorted by marks
-          List<Student> students = studentRepository.findAll(Sort.by("marks").descending());
+          List<Student> students = studentRepository.findAll(Sort.by("marks").descending()); // get student list sorted by marks
+          students.addAll(studentDtos.stream() // add the new list
+                          .map(s -> modelMapper.map(s, Student.class)) // map dto to entity class
+                          .collect(Collectors.toList()));
 
-          students.addAll(
-                  studentDtos.stream().map(s -> {
-                      Student newS = new Student();
-                      BeanUtils.copyProperties(s, newS);
-                      return newS;
-                  }).collect(Collectors.toList())
-          );
-          // add and sort the students list
-        Collections.sort(students, (s1,s2) -> s2.getMarks().compareTo(s1.getMarks()));
+        Collections.sort(students, (s1,s2) -> s2.getMarks().compareTo(s1.getMarks())); // add and sort the students list
 
         if (!students.isEmpty()) {
             double prevMarks = 0;
@@ -98,13 +86,8 @@ public class StudentServiceImpl implements StudentService {
                     i++;
                 } else {
                     if (prevMarks == s.getMarks()) { // check prev marks == current marks
-                        // for the first matching pair
-                        if (prevRank != -1) {
-                            s.setStudentRank(prevRank);
-                        } else {
-                            prevRank = i;
-                            s.setStudentRank(i);
-                        }
+                        s.setStudentRank( (prevRank != -1) ? prevRank : i); // for the first matching pair
+                        prevRank = (prevRank != -1 ? -1 : i);
                     } else {
                         i++;
                         prevRank = i;
@@ -113,6 +96,7 @@ public class StudentServiceImpl implements StudentService {
                 }
                 prevMarks = s.getMarks();
             }
+
         }
 
         return students;
