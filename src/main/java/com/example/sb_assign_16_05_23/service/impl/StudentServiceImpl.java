@@ -1,22 +1,16 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
+import com.example.sb_assign_16_05_23.dto.Mapper;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
-
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +57,6 @@ public class StudentServiceImpl implements StudentService {
 
         return newStudentDtos;
     }
-
 
     // recalculate rank
     @Override

@@ -18,4 +18,5 @@ public class ValidList<T> implements List<T> {
     @Delegate
     private List<T> list = new ArrayList<>();
 
+
 }
