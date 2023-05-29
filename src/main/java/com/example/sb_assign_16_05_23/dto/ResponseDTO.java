@@ -15,18 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class ResponseDTO<T> {
-//
-//    @Autowired
-//    ModelMapper modelMapper;
+public class ResponseDTO {
 
     private List<?> data;
     private String status;
     private String message;
 
-    public ResponseDTO<?> getResponseDTO(List<?> data, String message) {
+    public ResponseDTO getResponseDTO(List<?> data, String message) {
 
-        ResponseDTO<T> responseDTO = new ResponseDTO<>();
+        ResponseDTO responseDTO = new ResponseDTO();
 
         responseDTO.setData(data);
         responseDTO.setStatus(HttpStatus.OK.value() + " " + HttpStatus.OK.getReasonPhrase());
