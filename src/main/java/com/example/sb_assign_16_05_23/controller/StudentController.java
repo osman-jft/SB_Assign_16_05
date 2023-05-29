@@ -26,7 +26,7 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-    @PutMapping("/students/{sid}")
+    @PutMapping("/{sid}")
     private ResponseEntity<StudentDTO> updateStudent(@PathVariable Long sid, @RequestBody Student student) {
         if (!sid.equals(student.getId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

@@ -45,27 +45,34 @@ public class StudentServiceImpl implements StudentService {
 
 
     public StudentDTO updateStudent(Student updatedStudent) {
-        // checking student if present into DB or not
+        // Checking if student is present in the DB or not
         Student existingStudent = studentRepository.findById(updatedStudent.getId())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         existingStudent.setStudentName(updatedStudent.getStudentName());
         existingStudent.setMarks(updatedStudent.getMarks());
 
-        // Recalculate rank based on marks
         List<Student> allStudents = studentRepository.findAll();
-        Collections.sort(allStudents, (s1, s2) -> (int) (s2.getMarks() - s1.getMarks()));
+        Collections.sort(allStudents, (s1, s2) -> {
+            return (int) (s2.getMarks() - s1.getMarks());
+        });
+        int rank = 1;
+        double previousMarks = Double.POSITIVE_INFINITY;
 
-        for (int i = 0; i < allStudents.size(); i++) {
-            Student student = allStudents.get(i);
-            student.setRank(i + 1);
+        for (Student student : allStudents) {
+            if (student.getMarks() < previousMarks) {
+                student.setRank(rank);
+                rank++;
+            } else {
+                student.setRank(rank - 1);
+            }
+            previousMarks = student.getMarks();
             studentRepository.save(student);
         }
 
-        //updating the student
+        // Updating the student
         studentRepository.save(existingStudent);
         TypeToken<StudentDTO> typeToken = new TypeToken<>() {
         };
-
         // Casting student class to StudentDTO
         return modelMapper.map(existingStudent, typeToken.getType());
     }
