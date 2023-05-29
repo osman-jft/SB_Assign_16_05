@@ -19,8 +19,7 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping
-    private ResponseDTO<?> getStudents() {
-
+    private ResponseDTO getStudents() {
         //returns list of students from StudentService
         return studentService.getAllStudents();
     }

@@ -1,13 +1,12 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
+import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
-
 import org.modelmapper.TypeToken;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,34 +15,33 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
     @Autowired
     StudentRepository studentRepository;
-    @Qualifier("getModelMapper")
-  
+
     @Autowired
-    ResponseDTO<?> responseDTO;
+    ResponseDTO responseDTO;
+
+    @Autowired
+    ModelMapper modelMapper;
+
+
 
     @Override
-
-    public List<StudentDTO> getAllStudents() {
-        //create a List of Student type & store all db entries into it
-    public ResponseDTO<?> getAllStudents() {
+    //create a List of Student type & store all db entries into it
+    public ResponseDTO getAllStudents () {
         List<Student> students = studentRepository.findAll();
-
         System.out.println(responseDTO.getResponseDTO(students, "All Students Retrieved From Database").toString());
-
         return responseDTO.getResponseDTO(students, "All Students Retrieved From Database");
     }
 
-
-    public StudentDTO updateStudent(Student updatedStudent) {
-        // Checking if student is present in the DB or not
-        Student existingStudent = studentRepository.findById(updatedStudent.getId())
+    @Override
+    public StudentDTO updateStudent(Student studentData) {
+        Student existingStudent = studentRepository.findById(studentData.getId())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        existingStudent.setStudentName(updatedStudent.getStudentName());
-        existingStudent.setMarks(updatedStudent.getMarks());
+        existingStudent.setStudentName(studentData.getStudentName());
+        existingStudent.setMarks(studentData.getMarks());
 
         List<Student> allStudents = studentRepository.findAll();
         Collections.sort(allStudents, (s1, s2) -> {
@@ -70,7 +68,7 @@ public class StudentServiceImpl implements StudentService{
         // Casting student class to StudentDTO
         return modelMapper.map(existingStudent, typeToken.getType());
     }
-}
+
 
 }
 

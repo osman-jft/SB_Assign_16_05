@@ -27,8 +27,7 @@ TeacherServiceImpl implements TeacherService {
     ModelMapper modelMapper;
 
     @Autowired
-    ResponseDTO<?> responseDTO;
-
+    ResponseDTO responseDTO;
 
 
     public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
@@ -47,7 +46,7 @@ TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseDTO<?> getAllTeachers() {
+    public ResponseDTO getAllTeachers() {
 
         List<Teacher> teachers = teacherRepository.findAll();
 
@@ -55,7 +54,7 @@ TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseDTO<?> setTeachers(TeacherDTO teacherData){
+    public ResponseDTO setTeachers(TeacherDTO teacherData){
 
         Teacher teacher = teacherDTOToTeacher(teacherData);
         List<TeacherDTO> teacherDTO = Collections.singletonList(modelMapper.map(teacher, TeacherDTO.class));
@@ -64,7 +63,7 @@ TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseDTO<?> setAll(List<TeacherDTO> teacherData) {
+    public ResponseDTO setAll(List<TeacherDTO> teacherData) {
 
         List<Teacher> teacherList = new ArrayList<>();
 

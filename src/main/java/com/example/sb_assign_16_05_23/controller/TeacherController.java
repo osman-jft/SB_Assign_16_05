@@ -22,19 +22,19 @@ public class TeacherController {
     TeacherService teacherService;
 
     @GetMapping
-    private ResponseDTO<?> getTeachers() {
+    private ResponseDTO getTeachers() {
 
         //returns list of teachers from TeacherService
         return teacherService.getAllTeachers();
     }
 
     @PostMapping
-    private ResponseDTO<?> setTeachers(@RequestBody TeacherDTO teacherData) {
+    private ResponseDTO setTeachers(@RequestBody TeacherDTO teacherData) {
         return teacherService.setTeachers(teacherData);
     }
 
     @PostMapping("/list")
-    private ResponseDTO<?> setAll(@RequestBody List<TeacherDTO> teacherData) {
+    private ResponseDTO setAll(@RequestBody List<TeacherDTO> teacherData) {
 
         return teacherService.setAll(teacherData);
     }
