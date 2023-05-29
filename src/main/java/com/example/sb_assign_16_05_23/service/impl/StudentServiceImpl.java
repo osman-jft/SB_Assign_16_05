@@ -1,7 +1,7 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
-import com.example.sb_assign_16_05_23.dto.Mapper;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
@@ -15,21 +15,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService{
 
     @Autowired
     StudentRepository studentRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    ResponseDTO<?> responseDTO;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     @Override
     public List<StudentDTO> getAllStudents() {
-
-        //create a List of Student type & store all db entries into it
         List<Student> students = studentRepository.findAll();
-        //using ModelMapper we map each individual member of the list of students to the DTO & cache it to be used
-        //by the different layers in the application
+
         if(students.isEmpty()){
             return null;
         }
@@ -38,8 +39,8 @@ public class StudentServiceImpl implements StudentService {
                 .map(student -> modelMapper.map(student, StudentDTO.class))
                 .collect(Collectors.toList());
 
-        return studentDTOS;
-
+//        return studentDTOS;
+            return studentDTOS;
         }
 
 
@@ -95,3 +96,7 @@ public class StudentServiceImpl implements StudentService {
         return students;
     }
 }
+
+
+
+//dt

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +17,8 @@ public class StudentDTO {
     @NotBlank(message = "Name can not be blank")
     String studentName;
 
-    @Min(0) @Max(600) @NotNull(message = "Marks are required")
+    @NotNull(message = "Marks are required")
+    @Range(min = 0, max = 600, message = "Marks must be between 0 to 600")
     Double marks;
 
     Integer studentRank = 0;

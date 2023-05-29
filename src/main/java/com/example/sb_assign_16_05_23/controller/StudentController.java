@@ -2,14 +2,12 @@ package com.example.sb_assign_16_05_23.controller;
 
 import com.example.sb_assign_16_05_23.dto.ValidList;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
-import com.example.sb_assign_16_05_23.errors.BadRequestErrorException;
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import jakarta.validation.Valid;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,29 +15,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
-
     //student controller to create endpoint /api/students
 
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
+
+    @Autowired
+    private ResponseDTO responseDTO;
 
     @GetMapping
-    private ResponseEntity<?> getStudents() {
+    private ResponseDTO<?> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
         if(studentDto == null){
-            return ResponseEntity.accepted().body("Students list is empty");
+            return responseDTO.getResponseDTO(null, "Student's list is empty");
         }
         //returns list of students from StudentService
-        return ResponseEntity.accepted().body(studentDto);
+        return responseDTO.getResponseDTO(studentDto, "Student's list is retrieved successfully");
     }
-
 
     @PostMapping("/list")
-    public ResponseEntity<?> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos){
+    public ResponseDTO<?> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos){
         List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
-        return new ResponseEntity<>(dtos, HttpStatus.CREATED);
+        return responseDTO.getResponseDTO(dtos, "Student's list save successfully", HttpStatus.CREATED);
     }
-
 
 
 }

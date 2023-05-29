@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ValidList<T> implements List<T> {
+    // use to validate the list of DTO
     @Valid
     @Delegate
     private List<T> list = new ArrayList<>();
