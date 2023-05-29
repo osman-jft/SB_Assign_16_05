@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.controller;
 
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Teacher;
@@ -21,19 +22,19 @@ public class TeacherController {
     TeacherService teacherService;
 
     @GetMapping
-    private List<TeacherDTO> getTeachers() {
+    private ResponseDTO<?> getTeachers() {
 
         //returns list of teachers from TeacherService
         return teacherService.getAllTeachers();
     }
 
     @PostMapping
-    private ResponseEntity<String> setTeachers(@RequestBody TeacherDTO teacherData) {
+    private ResponseDTO<?> setTeachers(@RequestBody TeacherDTO teacherData) {
         return teacherService.setTeachers(teacherData);
     }
 
     @PostMapping("/list")
-    private ResponseEntity<String> setAll(@RequestBody List<TeacherDTO> teacherData) {
+    private ResponseDTO<?> setAll(@RequestBody List<TeacherDTO> teacherData) {
 
         return teacherService.setAll(teacherData);
     }
