@@ -19,9 +19,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     StudentRepository studentRepository;
-
-
     @Qualifier("getModelMapper")
+  
     @Autowired
     ModelMapper modelMapper;
 
