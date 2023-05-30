@@ -1,8 +1,6 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
-import com.example.sb_assign_16_05_23.dto.ResponseDTO;
-import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
@@ -21,20 +19,15 @@ public class StudentServiceImpl implements StudentService{
     @Autowired
     StudentRepository studentRepository;
 
-    @Autowired
-    ResponseDTO<?> responseDTO;
-
-    @Autowired
-    ModelMapper mapper;
+   @Autowired
+   ModelMapper mapper;
 
     @Override
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
-
         if(students.isEmpty()){
             return null;
         }
-//        return studentDTOS;
         return students.stream().map(student-> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
 
         }
@@ -58,7 +51,7 @@ public class StudentServiceImpl implements StudentService{
     // recalculate rank
     @Override
     public List<Student> calculateRank(List<StudentDTO> studentDtos) {
-          List<Student> students = studentRepository.findAll(Sort.by("marks").descending()); // get student list sorted by marks
+          List<Student> students = studentRepository.findAll(); // get student list sorted by marks
           students.addAll(studentDtos.stream() // add the new list
                           .map(s -> mapper.map(s, Student.class)) // map dto to entity class
                           .collect(Collectors.toList()));
@@ -93,7 +86,3 @@ public class StudentServiceImpl implements StudentService{
 
     }
 }
-
-
-
-//dt

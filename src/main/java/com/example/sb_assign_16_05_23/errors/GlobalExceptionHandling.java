@@ -12,38 +12,34 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
 
-    @Autowired
-    private ResponseDTO responseDTO;
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
-        return super.handleMethodArgumentNotValid(ex, headers, status, request);
+            MethodArgumentNotValidException exc, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+
+        ErrorResponse errorResponse = new ErrorResponse();
+        Map<String, String> errorMap = new HashMap<>();
+
+        exc.getBindingResult().getFieldErrors().forEach(e -> {
+            String fieldName = e.getField().split("].", 2)[1]; // "list[0].studentName -> {0: list[0, 1: studentName} [1]-> studentName
+            errorMap.put(fieldName, e.getDefaultMessage());
+        });
+
+        errorResponse.setMessages(errorMap);
+        errorResponse.setStatus(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
-/*    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseDTO<?> handleBadReq(MethodArgumentNotValidException exc){
-        BindingResult bindingResult = exc.getBindingResult();
-        FieldError fieldError = bindingResult.getFieldErrors().get(0);
-        String message = fieldError.getDefaultMessage();
-
-//        return new ResponseEntity<>(responseDTO1, HttpStatus.BAD_REQUEST);
-        ResponseDTO<String> responseDTO1 = ResponseDTO.<String>builder()
-                .message(message).status(HttpStatus.BAD_REQUEST.value()).build();
-//        return new ResponseEntity<>(responseDTO1, HttpStatus.BAD_REQUEST);
-        return responseDTO1;
-    }*/
 
 }
