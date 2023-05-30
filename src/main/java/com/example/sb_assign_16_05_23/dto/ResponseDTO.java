@@ -4,7 +4,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import org.springframework.stereotype.Component;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import java.util.List;
+
 
 @Data
 @Builder
@@ -12,9 +18,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 
+
 public class ResponseDTO<T> {
     private T data;
     private int status;
     private String message;
+
 }
 

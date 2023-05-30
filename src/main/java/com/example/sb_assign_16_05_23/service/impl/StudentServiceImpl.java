@@ -23,8 +23,6 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     ResponseDTO responseDTO;
 
-    @Autowired
-    ModelMapper modelMapper;
 
     @Autowired
     ModelMapper mapper;
@@ -35,29 +33,14 @@ public class StudentServiceImpl implements StudentService {
         List<Student> students = studentRepository.findAll();
         return students.stream().map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
     }
-    @Override
-    public StudentDTO updateStudent(StudentDTO updatedStudent) {
-        // checking student if present into DB or not
-        Student existingStudent = studentRepository.findById(updatedStudent.getId())
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-        existingStudent.setStudentName(updatedStudent.getName());
-        existingStudent.setMarks(updatedStudent.getMarks());
-
-        // Recalculate rank based on marks
-
-    //create a List of Student type & store all db entries into it
-    public ResponseDTO getAllStudents () {
-        List<Student> students = studentRepository.findAll();
-        System.out.println(responseDTO.getResponseDTO(students, "All Students Retrieved From Database").toString());
-        return responseDTO.getResponseDTO(students, "All Students Retrieved From Database");
-    }
 
     @Override
-    public StudentDTO updateStudent(Student studentData) {
+    public StudentDTO updateStudent(StudentDTO studentData) {
         Student existingStudent = studentRepository.findById(studentData.getId())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        existingStudent.setStudentName(studentData.getStudentName());
+        existingStudent.setStudentName(studentData.getName());
         existingStudent.setMarks(studentData.getMarks());
+
         List<Student> allStudents = studentRepository.findAll();
         Collections.sort(allStudents, (s1, s2) -> {
             return (int) (s2.getMarks() - s1.getMarks());
@@ -82,11 +65,8 @@ public class StudentServiceImpl implements StudentService {
         // Casting student class to StudentDTO
         return mapper.map(existingStudent, typeToken.getType());
     }
-
 }
 
 
 
-}
 
->>>>>>> feature-pradeep
