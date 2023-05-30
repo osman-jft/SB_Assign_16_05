@@ -1,3 +1,4 @@
+
 package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
@@ -28,9 +29,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
 
-    public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
+    public Teacher teacherDTOToTeacher(TeacherDTO teacherData) {
 
-        Teacher teacher =  modelMapper.map(teacherData, Teacher.class);
+        Teacher teacher = modelMapper.map(teacherData, Teacher.class);
         List<Subject> subjects = teacherData.getSubjects()
                 .stream()
                 .map(subject -> modelMapper.map(subject, Subject.class))
@@ -48,20 +49,20 @@ public class TeacherServiceImpl implements TeacherService {
 
         List<Teacher> teachers = teacherRepository.findAll();
 
-        return teachers.stream().map(teacher-> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
+        return teachers.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
-//
+
     @Override
-    public List<TeacherDTO> setTeachers(TeacherDTO teacherData){
+    public List<TeacherDTO> setTeachers(TeacherDTO teacherData) {
 
         Teacher teacher = teacherDTOToTeacher(teacherData);
         teacherDTO = Collections.singletonList(modelMapper.map(teacher, TeacherDTO.class));
 
         return teacherDTO;
     }
-//
+
     @Override
-    public List<TeacherDTO> setAll (List<TeacherDTO> teacherData) {
+    public List<TeacherDTO> setAll(List<TeacherDTO> teacherData) {
 
 
         List<Teacher> teacherList = teacherData.stream().map(this::teacherDTOToTeacher).toList();

@@ -29,6 +29,8 @@ public class StudentController {
         return ResponseDTO.<List<StudentDTO>>builder().data(studentService.getAllStudents())
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
+  
+  
     @PutMapping("/{sid}")
     private ResponseDTO<StudentDTO> updateStudent(@PathVariable Long sid, @RequestBody StudentDTO student) {
 

@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-
     @Autowired
     StudentRepository studentRepository;
+
 
     @Autowired
     ModelMapper mapper;
@@ -29,7 +29,6 @@ public class StudentServiceImpl implements StudentService {
         List<Student> students = studentRepository.findAll();
         return students.stream().map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
     }
-
     @Override
     public StudentDTO updateStudent(StudentDTO studentData) {
         Student existingStudent = studentRepository.findById(studentData.getId())

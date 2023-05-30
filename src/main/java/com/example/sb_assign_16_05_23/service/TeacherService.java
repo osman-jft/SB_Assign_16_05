@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface TeacherService {
 
+
       List<TeacherDTO> getAllTeachers();
       List<TeacherDTO> setTeachers(TeacherDTO teacherData);
       List<TeacherDTO> setAll(List<TeacherDTO> teacherData);
+
 }
 
