@@ -6,6 +6,7 @@ import com.example.sb_assign_16_05_23.service.TeacherService;
 import com.example.sb_assign_16_05_23.util.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -13,7 +14,7 @@ import java.util.List;
 public class TeacherController {
 
     //teacher controller to create endpoint /api/teachers
-    final private TeacherService teacherService;
+    private final TeacherService teacherService;
 
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
@@ -28,7 +29,6 @@ public class TeacherController {
 
     @PostMapping
     private ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody TeacherDTO teacherData) {
-
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setTeachers(teacherData))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
