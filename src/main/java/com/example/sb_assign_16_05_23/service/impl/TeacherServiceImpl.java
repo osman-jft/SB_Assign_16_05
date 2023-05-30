@@ -57,10 +57,7 @@ TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherDTO> setAll (List<TeacherDTO> teacherData) {
 
-
         List<Teacher> teacherList = teacherData.stream().map(this::teacherDTOToTeacher).toList();
-
         return teacherList.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).toList();
-
     }
 }
