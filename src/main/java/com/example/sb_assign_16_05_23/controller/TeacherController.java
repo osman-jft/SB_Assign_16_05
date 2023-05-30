@@ -23,7 +23,6 @@ public class TeacherController {
 
     @GetMapping
     private ResponseDTO getTeachers() {
-
         //returns list of teachers from TeacherService
         return teacherService.getAllTeachers();
     }
@@ -35,7 +34,6 @@ public class TeacherController {
 
     @PostMapping("/list")
     private ResponseDTO setAll(@RequestBody List<TeacherDTO> teacherData) {
-
         return teacherService.setAll(teacherData);
     }
 }
