@@ -22,14 +22,11 @@ TeacherServiceImpl implements TeacherService {
 
 
     private final ModelMapper modelMapper;
+    List<TeacherDTO> teacherDTO;
 
-
-    private final ResponseDTO responseDTO;
-
-    public TeacherServiceImpl(TeacherRepository teacherRepository, ModelMapper modelMapper, ResponseDTO responseDTO) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository, ModelMapper modelMapper) {
         this.teacherRepository = teacherRepository;
         this.modelMapper = modelMapper;
-        this.responseDTO = responseDTO;
     }
 
 
@@ -49,29 +46,29 @@ TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseDTO getAllTeachers() {
+    public List<TeacherDTO> getAllTeachers() {
 
         List<Teacher> teachers = teacherRepository.findAll();
 
-        return responseDTO.getResponseDTO(teachers, "All Teachers Retrieved From Database");
+        return teachers.stream().map(teacher-> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
-
+//
     @Override
-    public ResponseDTO setTeachers(TeacherDTO teacherData){
+    public List<TeacherDTO> setTeachers(TeacherDTO teacherData){
 
         Teacher teacher = teacherDTOToTeacher(teacherData);
-        List<TeacherDTO> teacherDTO = Collections.singletonList(modelMapper.map(teacher, TeacherDTO.class));
+        teacherDTO = Collections.singletonList(modelMapper.map(teacher, TeacherDTO.class));
 
-        return responseDTO.getResponseDTO(teacherDTO, "Teacher added to Database");
+        return teacherDTO;
     }
-
+//
     @Override
-    public ResponseDTO setAll(List<TeacherDTO> teacherData) {
+    public List<TeacherDTO> setAll (List<TeacherDTO> teacherData) {
 
-//        List<Teacher> teacherList = new ArrayList<>();
 
-        List<Teacher> teacherList = teacherData.stream().map(this::teacherDTOToTeacher).collect(Collectors.toList());
-        return responseDTO.getResponseDTO(teacherList, "List of Teachers added to Database");
+        List<Teacher> teacherList = teacherData.stream().map(this::teacherDTOToTeacher).toList();
+
+        return teacherList.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).toList();
 
     }
 }
