@@ -28,6 +28,5 @@ public class Teacher {
     private List<Subject> subjects;
 
 
-
 // constructors, getters and setters
 }

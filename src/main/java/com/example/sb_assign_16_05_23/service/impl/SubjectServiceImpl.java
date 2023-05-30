@@ -11,11 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
-
 
 
     private final SubjectRepository subjectRepository;
@@ -48,15 +46,12 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectDtoList;
     }
 
-    public SubjectDTO getSubjectTeacherName(Subject subject)
-    {
+    public SubjectDTO getSubjectTeacherName(Subject subject) {
         Teacher teacher = subject.getTeacher();
         SubjectDTO subjectDTO = modelMapper.map(subject, SubjectDTO.class);
         subjectDTO.setTeacherName(teacher.getName());
         return subjectDTO;
     }
-
-
 
 
 }

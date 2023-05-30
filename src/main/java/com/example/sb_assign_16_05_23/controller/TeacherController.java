@@ -15,6 +15,7 @@ public class TeacherController {
 
     //teacher controller to create endpoint /api/teachers
     private final TeacherService teacherService;
+
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
@@ -36,5 +37,5 @@ public class TeacherController {
     private ResponseDTO<List<TeacherDTO>> setAll(@RequestBody List<TeacherDTO> teacherData) {
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setAll(teacherData))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
-      }
+    }
 }
