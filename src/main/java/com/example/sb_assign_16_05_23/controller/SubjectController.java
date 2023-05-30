@@ -1,9 +1,7 @@
 package com.example.sb_assign_16_05_23.controller;
 
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
-import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.dto.SubjectDTO;
-import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.service.SubjectService;
 import com.example.sb_assign_16_05_23.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;

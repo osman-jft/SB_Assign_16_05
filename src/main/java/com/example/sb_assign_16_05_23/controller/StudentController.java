@@ -36,7 +36,7 @@ public class StudentController {
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
     @GetMapping("/marks/{value}")
-    private ResponseDTO<List<StudentDTO>> getStudents(@PathVariable Double value) {
+    private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@PathVariable Double value) {
 
 
         //returns list of students from StudentService

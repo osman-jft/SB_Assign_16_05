@@ -56,24 +56,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjectDTO;
     }
 
-   /* public  ResponseDTO getAllSubject()
-    {
-        List<Subject> subjects = subjectRepository.findAll();
 
-        return responseDTO.getResponseDTO(subjects, "All Subjects Retrieved From Database");
-
-    }*/
-   /* @Override
-    public ResponseDTO getSubjectandTeacherName(String name) {
-
-        Subject subject = subjectRepository.findSubjectByName(name);
-
-
-        SubjectDTO subjectDTO = modelMapper.map(subject, SubjectDTO.class);
-        subjectDTO.setTeacherName(subject.getTeacher().getName());
-
-        return responseDTO.getResponseDTO(Collections.singletonList(subjectDTO),"Subject retrieved from Database");
-    }*/
 
 
 }
