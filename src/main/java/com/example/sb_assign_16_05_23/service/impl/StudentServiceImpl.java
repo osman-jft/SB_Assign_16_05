@@ -16,10 +16,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
     @Autowired
     StudentRepository studentRepository;
+
     @Autowired
-    ResponseDTO<?> responseDTO;
+    ResponseDTO responseDTO;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Autowired
     ModelMapper mapper;
@@ -39,22 +44,49 @@ public class StudentServiceImpl implements StudentService {
         existingStudent.setMarks(updatedStudent.getMarks());
 
         // Recalculate rank based on marks
-        List<Student> allStudents = studentRepository.findAll();
-        Collections.sort(allStudents, (s1, s2) -> (int) (s2.getMarks() - s1.getMarks()));
 
-        for (int i = 0; i < allStudents.size(); i++) {
-            Student student = allStudents.get(i);
-            student.setRank(i + 1);
+    //create a List of Student type & store all db entries into it
+    public ResponseDTO getAllStudents () {
+        List<Student> students = studentRepository.findAll();
+        System.out.println(responseDTO.getResponseDTO(students, "All Students Retrieved From Database").toString());
+        return responseDTO.getResponseDTO(students, "All Students Retrieved From Database");
+    }
+
+    @Override
+    public StudentDTO updateStudent(Student studentData) {
+        Student existingStudent = studentRepository.findById(studentData.getId())
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        existingStudent.setStudentName(studentData.getStudentName());
+        existingStudent.setMarks(studentData.getMarks());
+        List<Student> allStudents = studentRepository.findAll();
+        Collections.sort(allStudents, (s1, s2) -> {
+            return (int) (s2.getMarks() - s1.getMarks());
+        });
+        int rank = 1;
+        double previousMarks = Double.POSITIVE_INFINITY;
+
+        for (Student student : allStudents) {
+            if (student.getMarks() < previousMarks) {
+                student.setRank(rank);
+                rank++;
+            } else {
+                student.setRank(rank - 1);
+            }
+            previousMarks = student.getMarks();
             studentRepository.save(student);
         }
-
-        //updating the student
+        // Updating the student
         studentRepository.save(existingStudent);
         TypeToken<StudentDTO> typeToken = new TypeToken<>() {
         };
         // Casting student class to StudentDTO
         return mapper.map(existingStudent, typeToken.getType());
     }
+
 }
 
 
+
+}
+
+>>>>>>> feature-pradeep

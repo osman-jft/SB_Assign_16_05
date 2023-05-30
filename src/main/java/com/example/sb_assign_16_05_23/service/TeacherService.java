@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface TeacherService {
 
+<<<<<<< HEAD
     List<TeacherDTO> getAllTeachers();
     ResponseDTO<?> setTeachers(TeacherDTO teacherData);
+=======
+    ResponseDTO getAllTeachers();
+    ResponseDTO setTeachers(TeacherDTO teacherData);
+>>>>>>> feature-pradeep
 
-    ResponseDTO<?> setAll(List<TeacherDTO> teacherData);
+    ResponseDTO setAll(List<TeacherDTO> teacherData);
 }
 

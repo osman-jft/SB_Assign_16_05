@@ -1,8 +1,14 @@
 package com.example.sb_assign_16_05_23.controller;
+<<<<<<< HEAD
 
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
+=======
+import com.example.sb_assign_16_05_23.dto.StudentDTO;
+import com.example.sb_assign_16_05_23.entity.Student;
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
+>>>>>>> feature-pradeep
 import com.example.sb_assign_16_05_23.service.StudentService;
 import com.example.sb_assign_16_05_23.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,26 +27,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
-
     //student controller to create endpoint /api/students
 
     @Autowired
     StudentService studentService;
 
     @GetMapping
+<<<<<<< HEAD
     private ResponseDTO<List<StudentDTO>> getStudents() {
+=======
+    private ResponseDTO getStudents() {
+>>>>>>> feature-pradeep
         //returns list of students from StudentService
         return ResponseDTO.<List<StudentDTO>>builder().data(studentService.getAllStudents())
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
     @PutMapping("/{sid}")
+<<<<<<< HEAD
     private ResponseDTO<StudentDTO> updateStudent(@PathVariable Long sid, @RequestBody StudentDTO student) {
+=======
+    private ResponseEntity<StudentDTO> updateStudent(@PathVariable Long sid, @RequestBody Student student) {
+>>>>>>> feature-pradeep
         if (!sid.equals(student.getId())) {
             return  ResponseDTO.<StudentDTO>builder().data(student).message(Constants.BAD_REQUEST_MSG).status(HttpStatus.BAD_REQUEST.value()).build();
         }
         return ResponseDTO.<StudentDTO>builder().data(studentService.updateStudent(student))
                         .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
-
 }
