@@ -1,6 +1,7 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
+import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -21,33 +23,38 @@ public class StudentServiceImpl implements StudentService{
     @Autowired
     ResponseDTO<?> responseDTO;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @Override
     public ResponseDTO<?> getAllStudents() {
-        List<Student> students = studentRepository.findAll();
-
+        List<StudentDTO> students = studentRepository.findAll().stream()
+                .map(student -> modelMapper.map(student,StudentDTO.class))
+                .collect(Collectors.toList());
         System.out.println(responseDTO.getResponseDTO(students, "All Students Retrieved From Database").toString());
-
         return responseDTO.getResponseDTO(students, "All Students Retrieved From Database");
     }
     @Override
-    public List<StudentDTO> sortAccordingToRank() {
-        return studentRepository.findAll().stream().
+    public ResponseDTO sortAccordingToRank() {
+        List<StudentDTO> studentListSorted =  studentRepository.findAll().stream().
                 sorted(Comparator.comparing(Student::getStudentRank)).
                 map(student -> modelMapper.map(student,StudentDTO.class))
                 .collect(Collectors.toList());
+        return responseDTO.getResponseDTO(studentListSorted,"All students sorted by rank");
     }
 
     @Override
-    public List<StudentDTO> sortAccordingTo(String sortField) {
+    public ResponseDTO sortAccordingTo(String sortField) {
         Comparator<Student> comparator = switch (sortField) {
             case "name" -> Comparator.comparing(Student::getStudentName);
             case "marks" -> Comparator.comparing(Student::getMarks);
             case "rank" -> Comparator.comparing(Student::getStudentRank);
             case "id", default -> Comparator.comparing(Student::getId);
         };
-        return studentRepository.findAll().stream()
+        List<StudentDTO> studentDTOList= studentRepository.findAll().stream()
                 .sorted(comparator)
                 .map(student -> modelMapper.map(student,StudentDTO.class))
-                .collect(Collectors.toList());
+                .toList();
+        return responseDTO.getResponseDTO(studentDTOList,"Sorted by the given field");
     }
 }

@@ -19,20 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class
 TeacherServiceImpl implements TeacherService {
-
     @Autowired
     TeacherRepository teacherRepository;
-
     @Autowired
     ModelMapper modelMapper;
-
     @Autowired
     ResponseDTO<?> responseDTO;
-
-
-
     public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
-
         Teacher teacher =  modelMapper.map(teacherData, Teacher.class);
         List<Subject> subjects = teacherData.getSubjects()
                 .stream()
@@ -41,7 +34,6 @@ TeacherServiceImpl implements TeacherService {
 
         subjects.forEach(subject -> subject.setTeacher(teacher));
         teacher.setSubjects(subjects);
-
         teacherRepository.save(teacher);
         return teacher;
     }

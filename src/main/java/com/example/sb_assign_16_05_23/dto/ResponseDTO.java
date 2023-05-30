@@ -25,13 +25,16 @@ public class ResponseDTO<T> {
     private String message;
 
     public ResponseDTO<?> getResponseDTO(List<?> data, String message) {
-
         ResponseDTO<T> responseDTO = new ResponseDTO<>();
-
         responseDTO.setData(data);
         responseDTO.setStatus(HttpStatus.OK.value() + " " + HttpStatus.OK.getReasonPhrase());
         responseDTO.setMessage(message);
         return responseDTO;
+    }
+    public ResponseDTO getErrorResponseDTO(String message){
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setMessage(message);
+        return  responseDTO;
     }
 }
 
