@@ -29,6 +29,7 @@ public class TeacherController {
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers())
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
+
     @PostMapping
     private ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody TeacherDTO teacherData) {
 
