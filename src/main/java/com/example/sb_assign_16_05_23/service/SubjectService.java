@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SubjectService {
 
-    ResponseDTO getSubjectandTeacherName (String name);
+    List<SubjectDTO> getAllSubject();
+    List<SubjectDTO> getSubjectandTeacherName (String name);
 
-    ResponseDTO getAllSubject();
 }
