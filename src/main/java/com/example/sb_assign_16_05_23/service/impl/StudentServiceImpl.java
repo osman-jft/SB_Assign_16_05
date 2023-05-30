@@ -33,7 +33,6 @@ public class StudentServiceImpl implements StudentService {
         List<Student> students = studentRepository.findAll();
         return students.stream().map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
     }
-
     @Override
     public StudentDTO updateStudent(StudentDTO studentData) {
         Student existingStudent = studentRepository.findById(studentData.getId())
@@ -66,7 +65,4 @@ public class StudentServiceImpl implements StudentService {
         return mapper.map(existingStudent, typeToken.getType());
     }
 }
-
-
-
 
