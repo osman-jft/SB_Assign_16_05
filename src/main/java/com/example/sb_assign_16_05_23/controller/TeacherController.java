@@ -14,24 +14,20 @@ import java.util.List;
 public class TeacherController {
 
     //teacher controller to create endpoint /api/teachers
-
-
     private final TeacherService teacherService;
-
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
+
     @GetMapping
     private ResponseDTO<List<TeacherDTO>> getTeachers() {
-
-
         //returns list of students from StudentService
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers())
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
+
     @PostMapping
     private ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody TeacherDTO teacherData) {
-
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setTeachers(teacherData))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }

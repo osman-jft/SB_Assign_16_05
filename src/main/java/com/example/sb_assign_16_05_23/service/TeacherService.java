@@ -1,6 +1,7 @@
 package com.example.sb_assign_16_05_23.service;
 
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
+import com.example.sb_assign_16_05_23.entity.Teacher;
 
 import java.util.List;
 
