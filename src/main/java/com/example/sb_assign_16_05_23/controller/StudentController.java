@@ -7,10 +7,13 @@ import com.example.sb_assign_16_05_23.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import com.example.sb_assign_16_05_23.util.Constants;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/api/students")
@@ -20,23 +23,27 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @Autowired
-    private ResponseDTO responseDTO;
-
     @GetMapping
-    private ResponseDTO<?> getStudents() {
+    private ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
         if(studentDto == null){
-            return responseDTO.getResponseDTO(null, "Student's list is empty");
+            return ResponseDTO.<List<StudentDTO>>builder()
+                    .data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value())
+                    .build();
         }
         //returns list of students from StudentService
-        return responseDTO.getResponseDTO(studentDto, "Student's list is retrieved successfully");
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
+                .build();
     }
 
     @PostMapping("/list")
-    public ResponseDTO<?> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos){
+    public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos){
         List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
-        return responseDTO.getResponseDTO(dtos, "Student's list save successfully", HttpStatus.CREATED);
+
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value())
+                .build();
     }
 
 

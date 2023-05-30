@@ -2,6 +2,7 @@ package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
+import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
@@ -24,8 +25,7 @@ public class StudentServiceImpl implements StudentService{
     ResponseDTO<?> responseDTO;
 
     @Autowired
-    private ModelMapper modelMapper;
-
+    ModelMapper mapper;
 
     @Override
     public List<StudentDTO> getAllStudents() {
@@ -34,13 +34,9 @@ public class StudentServiceImpl implements StudentService{
         if(students.isEmpty()){
             return null;
         }
-        List<StudentDTO> studentDTOS = students
-                .stream()
-                .map(student -> modelMapper.map(student, StudentDTO.class))
-                .collect(Collectors.toList());
-
 //        return studentDTOS;
-            return studentDTOS;
+        return students.stream().map(student-> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
+
         }
 
 
@@ -52,7 +48,7 @@ public class StudentServiceImpl implements StudentService{
         students.forEach(s -> {
             if(s.getId() == null){ // if id=null then it is new student obj which is not registered yet
                 studentRepository.save(s);
-                newStudentDtos.add(modelMapper.map(s, StudentDTO.class));
+                newStudentDtos.add(mapper.map(s, StudentDTO.class));
             } else studentRepository.save(s);
         });
 
@@ -64,7 +60,7 @@ public class StudentServiceImpl implements StudentService{
     public List<Student> calculateRank(List<StudentDTO> studentDtos) {
           List<Student> students = studentRepository.findAll(Sort.by("marks").descending()); // get student list sorted by marks
           students.addAll(studentDtos.stream() // add the new list
-                          .map(s -> modelMapper.map(s, Student.class)) // map dto to entity class
+                          .map(s -> mapper.map(s, Student.class)) // map dto to entity class
                           .collect(Collectors.toList()));
 
         Collections.sort(students, (s1,s2) -> s2.getMarks().compareTo(s1.getMarks())); // add and sort the students list
@@ -94,6 +90,7 @@ public class StudentServiceImpl implements StudentService{
         }
 
         return students;
+
     }
 }
 

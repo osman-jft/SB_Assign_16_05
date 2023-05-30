@@ -6,7 +6,9 @@ import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Teacher;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import com.example.sb_assign_16_05_23.service.TeacherService;
+import com.example.sb_assign_16_05_23.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,21 +23,31 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+    @Autowired
+    ResponseDTO responseDTO;
+
     @GetMapping
-    private ResponseDTO<?> getTeachers() {
+    private ResponseDTO<List<TeacherDTO>> getTeachers() {
 
         //returns list of teachers from TeacherService
-        return teacherService.getAllTeachers();
+        return ResponseDTO.<List<TeacherDTO>>builder()
+                .data(teacherService.getAllTeachers()).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
+                .build();
     }
 
     @PostMapping
-    private ResponseDTO<?> setTeachers(@RequestBody TeacherDTO teacherData) {
-        return teacherService.setTeachers(teacherData);
+    private ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody TeacherDTO teacherData) {
+
+        return ResponseDTO.<List<TeacherDTO>>builder()
+                .data(teacherService.setTeachers(teacherData)).status(HttpStatus.CREATED.value())
+                .build();
     }
 
     @PostMapping("/list")
-    private ResponseDTO<?> setAll(@RequestBody List<TeacherDTO> teacherData) {
+    private ResponseDTO<List<Teacher>> setAll(@RequestBody List<TeacherDTO> teacherData) {
 
-        return teacherService.setAll(teacherData);
+        return ResponseDTO.<List<Teacher>>builder()
+                .data(teacherService.setAll(teacherData)).status(HttpStatus.OK.value()).message(Constants.SUCCESS_MSG)
+                .build();
     }
 }
