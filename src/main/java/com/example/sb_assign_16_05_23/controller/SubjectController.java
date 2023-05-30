@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.controller;
 
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.SubjectDTO;
 import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.service.SubjectService;
@@ -20,12 +21,12 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
     @GetMapping("/list")
-    private List<SubjectDTO> getAllSubjects()
+    private ResponseDTO getAllSubjects()
     {
         return subjectService.getAllSubject();
     }
     @GetMapping("/{name}")
-    private SubjectDTO getSubjectByName(@PathVariable String name){
+    private ResponseDTO getSubjectByName(@PathVariable String name){
         return subjectService.getSubjectandTeacherName(name);
     }
 }
