@@ -29,8 +29,6 @@ TeacherServiceImpl implements TeacherService {
     @Autowired
     ResponseDTO<?> responseDTO;
 
-
-
     public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
 
         Teacher teacher =  modelMapper.map(teacherData, Teacher.class);

@@ -16,10 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 public class ResponseDTO<T> {
-//
-//    @Autowired
-//    ModelMapper modelMapper;
-// add default status message
+
     private List<?> data;
     private String status ;
     private String message;
