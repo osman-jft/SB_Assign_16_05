@@ -3,7 +3,6 @@ import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import com.example.sb_assign_16_05_23.util.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +16,13 @@ import java.util.List;
 @RequestMapping("/api/students")
 public class StudentController {
     //student controller to create endpoint /api/students
-    @Autowired
-    StudentService studentService;
+
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @GetMapping
     private ResponseDTO<List<StudentDTO>> getStudents() {
         //returns list of students from StudentService
