@@ -6,7 +6,6 @@ import com.example.sb_assign_16_05_23.service.StudentService;
 import com.example.sb_assign_16_05_23.util.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,14 +29,6 @@ public class StudentController {
 
         //returns list of students from StudentService
         return ResponseDTO.<List<StudentDTO>>builder().data(studentService.getAllStudents())
-                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
-    }
-    @GetMapping("/marks/{value}")
-    private ResponseDTO<List<StudentDTO>> getStudentsGreaterThan(@PathVariable Double value) {
-
-
-        //returns list of students from StudentService
-        return ResponseDTO.<List<StudentDTO>>builder().data(studentService.findByMarksGreaterThan(value))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 }
