@@ -1,6 +1,5 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
-import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.entity.Teacher;
