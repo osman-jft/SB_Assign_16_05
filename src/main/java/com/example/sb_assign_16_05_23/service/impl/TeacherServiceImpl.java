@@ -20,7 +20,6 @@ TeacherServiceImpl implements TeacherService {
 
     private final TeacherRepository teacherRepository;
 
-
     private final ModelMapper modelMapper;
     List<TeacherDTO> teacherDTO;
 
@@ -28,7 +27,6 @@ TeacherServiceImpl implements TeacherService {
         this.teacherRepository = teacherRepository;
         this.modelMapper = modelMapper;
     }
-
 
     public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
 
@@ -64,7 +62,6 @@ TeacherServiceImpl implements TeacherService {
 //
     @Override
     public List<TeacherDTO> setAll (List<TeacherDTO> teacherData) {
-
 
         List<Teacher> teacherList = teacherData.stream().map(this::teacherDTOToTeacher).toList();
 
