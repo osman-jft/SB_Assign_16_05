@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.controller;
 
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Teacher;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/teachers")
 public class TeacherController {
 
     //teacher controller to create endpoint /api/teachers
@@ -20,15 +21,21 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    @GetMapping("/teachers")
-    private List<TeacherDTO> getTeachers() {
+    @GetMapping
+    private ResponseDTO<?> getTeachers() {
 
         //returns list of teachers from TeacherService
         return teacherService.getAllTeachers();
     }
 
-    @PostMapping("/teachers")
-    private ResponseEntity<String> setTeachers(@RequestBody Teacher teacherData) {
+    @PostMapping
+    private ResponseDTO<?> setTeachers(@RequestBody TeacherDTO teacherData) {
         return teacherService.setTeachers(teacherData);
+    }
+
+    @PostMapping("/list")
+    private ResponseDTO<?> setAll(@RequestBody List<TeacherDTO> teacherData) {
+
+        return teacherService.setAll(teacherData);
     }
 }
