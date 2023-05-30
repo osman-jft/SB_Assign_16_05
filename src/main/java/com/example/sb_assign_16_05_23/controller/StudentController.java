@@ -4,7 +4,6 @@ import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import com.example.sb_assign_16_05_23.util.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,14 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
+    //student controller to create endpoint /api/students
+
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
 
     @GetMapping
     private ResponseDTO<List<StudentDTO>> getStudents() {

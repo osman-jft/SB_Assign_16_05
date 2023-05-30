@@ -39,27 +39,20 @@ TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<TeacherDTO> getAllTeachers() {
-
         List<Teacher> teachers = teacherRepository.findAll();
-
         return teachers.stream().map(teacher-> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
-    //
+  
     @Override
     public List<TeacherDTO> setTeachers(TeacherDTO teacherData){
-
         Teacher teacher = teacherDTOToTeacher(teacherData);
         teacherDTO = Collections.singletonList(modelMapper.map(teacher, TeacherDTO.class));
-
         return teacherDTO;
     }
-    //
+
     @Override
     public List<TeacherDTO> setAll (List<TeacherDTO> teacherData) {
-
-
         List<Teacher> teacherList = teacherData.stream().map(this::teacherDTOToTeacher).toList();
-
         return teacherList.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).toList();
 
     }

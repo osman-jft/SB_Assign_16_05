@@ -1,17 +1,12 @@
 package com.example.sb_assign_16_05_23.controller;
-
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
-import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
-import com.example.sb_assign_16_05_23.entity.Teacher;
-import com.example.sb_assign_16_05_23.service.StudentService;
 import com.example.sb_assign_16_05_23.service.TeacherService;
-import com.example.sb_assign_16_05_23.util.Constants;
+import com.example.sb_assign_16_05_23.util.Constants
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -30,6 +25,7 @@ public class TeacherController {
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers())
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
+
     @PostMapping
     private ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody TeacherDTO teacherData) {
 
