@@ -15,24 +15,20 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpl implements StudentService{
 
+
     @Autowired
     StudentRepository studentRepository;
 
-    @Autowired
-    ResponseDTO<?> responseDTO;
 
-    @Autowired
-    ModelMapper mapper;
+   @Autowired
+   ResponseDTO<?> responseDTO;
+
+   @Autowired
+   ModelMapper mapper;
 
     @Override
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
-
-
         return students.stream().map(student-> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
     }
 }
-
-
-
-//dt
