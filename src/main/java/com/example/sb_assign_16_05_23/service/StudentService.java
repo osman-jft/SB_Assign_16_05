@@ -6,7 +6,7 @@ import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import java.util.List;
 
 public interface StudentService {
-    ResponseDTO<?> getAllStudents();
-    ResponseDTO sortAccordingToRank();
-    ResponseDTO sortAccordingTo(String sortField);
-    }
+    List<StudentDTO> getAllStudents();
+    List<StudentDTO> sortAccordingToRank();
+    List<StudentDTO> sortAccordingTo(String sortField);
+}
