@@ -31,4 +31,11 @@ public class StudentServiceImpl implements StudentService{
         List<Student> students = studentRepository.findAll();
         return students.stream().map(student-> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<StudentDTO> findByMarksGreaterThan(Double value) {
+        return studentRepository.findByMarksGreaterThan(value).stream()
+                .map(student -> mapper.map(student,StudentDTO.class))
+                .toList();
+    }
 }

@@ -12,4 +12,6 @@ public class SubjectDTO {
     Long id;
 
     String name;
+
+    String teachername;
 }
