@@ -12,5 +12,12 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
+    List<Student> findAllByOrderByStudentRank();
+
+    List<Student> findAllByOrderByStudentName();
+
+    List<Student> findAllByOrderByMarks();
+
+    List<Student> findAllByOrderById();
 
 }

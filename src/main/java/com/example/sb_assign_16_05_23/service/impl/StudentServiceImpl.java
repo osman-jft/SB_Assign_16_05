@@ -85,4 +85,25 @@ public class StudentServiceImpl implements StudentService{
         return students;
 
     }
+
+    @Override
+    public List<StudentDTO> sortAccordingToRank() {
+        return studentRepository.findAllByOrderByStudentRank().stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<StudentDTO> sortAccordingTo(String sortField) {
+        List<Student> s;
+        switch (sortField) {
+            case "name" -> s = studentRepository.findAllByOrderByStudentName();
+            case "marks" -> s = studentRepository.findAllByOrderByMarks();
+            case "rank" -> s = studentRepository.findAllByOrderByStudentRank();
+            default -> s = studentRepository.findAllByOrderById();
+        }
+        return s.stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+    }
 }
