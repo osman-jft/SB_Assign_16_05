@@ -31,37 +31,29 @@ public class StudentController {
 
         List<StudentDTO> studentDto = studentService.getAllStudents();
         if (studentDto == null) { // check null condition for list
-            return ResponseDTO.<List<StudentDTO>>builder()
-                    .data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value())
-                    .build();
+            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value()).build();
         }
 
-        return ResponseDTO.<List<StudentDTO>>builder()
-                .data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
-                .build();
+        return ResponseDTO.<List<StudentDTO>>builder().data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
     //Fetch all students sorted by rank.
     @GetMapping("/sorted-by-rank")
     public ResponseDTO<List<StudentDTO>> getStudentsSortedByRank() {
-        return ResponseDTO.<List<StudentDTO>>builder().data(studentService.sortAccordingToRank())
-                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        return ResponseDTO.<List<StudentDTO>>builder().data(studentService.sortAccordingToRank()).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
     //Fetch all students sorted by the given column name accepted.
     @GetMapping("/sort-by-{sortField}")
     public ResponseDTO getStudentsSortedBy(@PathVariable String sortField) {
-        return ResponseDTO.<List<StudentDTO>>builder().data(studentService.sortAccordingTo(sortField))
-                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        return ResponseDTO.<List<StudentDTO>>builder().data(studentService.sortAccordingTo(sortField)).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
     @PostMapping("/list")
     public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos) {
         List<StudentDTO> dtos = studentService.registerStudentList(studentDtos);
 
-        return ResponseDTO.<List<StudentDTO>>builder()
-                .data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value())
-                .build();
+        return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
     }
 }
 
