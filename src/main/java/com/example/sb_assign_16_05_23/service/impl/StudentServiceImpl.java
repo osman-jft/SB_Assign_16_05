@@ -88,10 +88,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDTO> sortAccordingToRank() {
-        return studentRepository.findAll().stream().
-                sorted(Comparator.comparing(Student::getStudentRank)).
-                map(student -> mapper.map(student, StudentDTO.class))
-                .collect(Collectors.toList());
+        return studentRepository.findAll().stream().sorted(Comparator.comparing(Student::getStudentRank)).map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -102,9 +99,6 @@ public class StudentServiceImpl implements StudentService {
             case "rank" -> Comparator.comparing(Student::getStudentRank);
             case "id", default -> Comparator.comparing(Student::getId);
         };
-        return studentRepository.findAll().stream()
-                .sorted(comparator)
-                .map(student -> mapper.map(student, StudentDTO.class))
-                .toList();
+        return studentRepository.findAll().stream().sorted(comparator).map(student -> mapper.map(student, StudentDTO.class)).toList();
     }
 }
