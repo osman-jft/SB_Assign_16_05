@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,17 +86,22 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDTO> sortAccordingToRank() {
-        return studentRepository.findAll().stream().sorted(Comparator.comparing(Student::getStudentRank)).map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
+        return studentRepository.findAllByOrderByStudentRank().stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
     }
 
     @Override
     public List<StudentDTO> sortAccordingTo(String sortField) {
-        Comparator<Student> comparator = switch (sortField) {
-            case "name" -> Comparator.comparing(Student::getStudentName);
-            case "marks" -> Comparator.comparing(Student::getMarks);
-            case "rank" -> Comparator.comparing(Student::getStudentRank);
-            default -> Comparator.comparing(Student::getId);
-        };
-        return studentRepository.findAll().stream().sorted(comparator).map(student -> mapper.map(student, StudentDTO.class)).toList();
+        List<Student> s;
+        switch (sortField) {
+            case "name" -> s = studentRepository.findAllByOrderByStudentName();
+            case "marks" -> s = studentRepository.findAllByOrderByMarks();
+            case "rank" -> s = studentRepository.findAllByOrderByStudentRank();
+            default -> s = studentRepository.findAllByOrderById();
+        }
+        return s.stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
     }
 }
