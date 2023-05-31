@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
@@ -52,7 +51,6 @@ public class StudentController {
     @PostMapping("/list")
     public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos) {
         List<StudentDTO> dtos = studentService.registerStudentList(studentDtos);
-
         return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
     }
 }

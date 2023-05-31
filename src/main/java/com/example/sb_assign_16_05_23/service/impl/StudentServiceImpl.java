@@ -30,7 +30,6 @@ public class StudentServiceImpl implements StudentService {
             return null;
         }
         return students.stream().map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
-
     }
 
 
