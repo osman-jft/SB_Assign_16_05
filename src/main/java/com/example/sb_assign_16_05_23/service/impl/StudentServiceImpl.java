@@ -96,7 +96,7 @@ public class StudentServiceImpl implements StudentService {
             case "name" -> Comparator.comparing(Student::getStudentName);
             case "marks" -> Comparator.comparing(Student::getMarks);
             case "rank" -> Comparator.comparing(Student::getStudentRank);
-            case "id", default -> Comparator.comparing(Student::getId);
+            default -> Comparator.comparing(Student::getId);
         };
         return studentRepository.findAll().stream().sorted(comparator).map(student -> mapper.map(student, StudentDTO.class)).toList();
     }
