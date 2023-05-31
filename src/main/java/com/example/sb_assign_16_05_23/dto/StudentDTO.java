@@ -21,6 +21,6 @@ public class StudentDTO {
     @Range(min = 0, max = 600, message = "Marks must be between 0 to 600")
     Double marks;
 
-    Integer rank;
+    Integer studentRank = 0;
 
 }
