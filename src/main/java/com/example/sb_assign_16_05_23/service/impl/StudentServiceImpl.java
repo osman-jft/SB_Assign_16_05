@@ -2,14 +2,13 @@ package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
-import com.example.sb_assign_16_05_23.errors.StudentExceptionHandler;
+import com.example.sb_assign_16_05_23.errors.NotFoundException;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -80,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentDTO updateStudent(StudentDTO studentDTO) {
 
         Student existingStudent = studentRepository.findById(studentDTO.getId())
-                .orElseThrow(() -> new StudentExceptionHandler("Student not found with id " + studentDTO.getId()));
+                .orElseThrow(() -> new NotFoundException("Student not found with id " + studentDTO.getId()));
 
         mapper.map(studentDTO, existingStudent);
         System.out.println(existingStudent);
