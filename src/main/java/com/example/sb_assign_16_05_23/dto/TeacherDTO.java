@@ -17,9 +17,8 @@ public class TeacherDTO {
     Long id;
 
 
-
-    @NotBlank(message = "Name can not be blank")
     @NotNull(message = "Name can not be null")
+    @NotBlank(message = "Name can not be blank")
     String name;
 
     @Valid
