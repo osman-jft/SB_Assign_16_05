@@ -26,24 +26,19 @@ public class TeacherController {
     private ResponseDTO<List<TeacherDTO>> getTeachers() {
         List<TeacherDTO> teacherDto = teacherService.getAllTeachers();
         if (teacherDto == null) { // check null condition for list
-            return ResponseDTO.<List<TeacherDTO>>builder()
-                    .data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value())
-                    .build();
+            return ResponseDTO.<List<TeacherDTO>>builder().data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value()).build();
         }
 
-        return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers())
-                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers()).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
     @PostMapping
     private ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody @Valid TeacherDTO teacherData) {
-        return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setTeachers(teacherData))
-                .message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
+        return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setTeachers(teacherData)).message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
     }
 
     @PostMapping("/list")
     private ResponseDTO<List<TeacherDTO>> setAll(@RequestBody @Valid ValidList<TeacherDTO> teacherData) {
-        return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setAll(teacherData))
-                .message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
+        return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setAll(teacherData)).message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
     }
 }

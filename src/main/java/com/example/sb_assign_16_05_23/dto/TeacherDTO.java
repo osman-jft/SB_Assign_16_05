@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,9 +17,11 @@ public class TeacherDTO {
     Long id;
 
 
-    @NotNull(message = "Name can not be null")
+
     @NotBlank(message = "Name can not be blank")
+    @NotNull(message = "Name can not be null")
     String name;
 
+    @Valid
     List<SubjectDTO> subjects;
 }
