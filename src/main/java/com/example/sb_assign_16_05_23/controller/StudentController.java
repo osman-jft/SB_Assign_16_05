@@ -3,7 +3,6 @@ package com.example.sb_assign_16_05_23.controller;
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.dto.ValidList;
-import com.example.sb_assign_16_05_23.errors.StudentExceptionHandler;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import com.example.sb_assign_16_05_23.util.Constants;
 import jakarta.validation.Valid;
@@ -48,11 +47,8 @@ public class StudentController {
                 .build();
     }
 
-    @PutMapping("/{sid}")
-    private ResponseDTO<StudentDTO> updateStudent(@PathVariable("sid") Long sid, @RequestBody StudentDTO student) {
-        if (!sid.equals(student.getId())) {
-            throw new StudentExceptionHandler("Given Id is Not matching with each-other and IDs Are " + sid + " and " + student.getId());
-        }
+    @PutMapping()
+    private ResponseDTO<StudentDTO> updateStudent(@RequestBody @Valid StudentDTO student) {
         return ResponseDTO.<StudentDTO>builder().data(studentService.updateStudent(student))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }

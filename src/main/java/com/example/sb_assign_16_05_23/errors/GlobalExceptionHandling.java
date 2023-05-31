@@ -37,8 +37,8 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> notFound(StudentExceptionHandler exc) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(Exception exc) {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put("ErrorMessage", exc.getMessage());
         ErrorResponse error = new ErrorResponse();
@@ -46,6 +46,5 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         error.setMessages(errorMap);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-
 
 }
