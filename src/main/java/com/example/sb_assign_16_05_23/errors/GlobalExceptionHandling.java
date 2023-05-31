@@ -1,4 +1,6 @@
 package com.example.sb_assign_16_05_23.errors;
+
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -6,10 +8,10 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,5 +36,16 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         errorResponse.setStatus(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> notFound(StudentExceptionHandler exc) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("ErrorMessage", exc.getMessage());
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND);
+        error.setMessages(errorMap);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
 
 }

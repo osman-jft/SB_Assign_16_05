@@ -22,5 +22,4 @@ public class StudentDTO {
     Double marks;
 
     Integer studentRank = 0;
-
 }

@@ -2,10 +2,12 @@ package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
+import com.example.sb_assign_16_05_23.errors.StudentExceptionHandler;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,17 +18,14 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private final StudentRepository studentRepository;
-    private final ModelMapper mapper;
+    @Autowired
+    StudentRepository studentRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository, ModelMapper mapper) {
-        this.studentRepository = studentRepository;
-        this.mapper = mapper;
-    }
+    @Autowired
+    ModelMapper mapper;
 
     @Override
     public List<StudentDTO> getAllStudents() {
-        //create a List of Student type & store all db entries into it
         List<Student> students = studentRepository.findAll();
         if (students.isEmpty()) {
             return null;
@@ -90,35 +89,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDTO updateStudent(StudentDTO studentData) {
-        Student existingStudent = studentRepository.findById(studentData.getId())
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-        existingStudent.setStudentName(studentData.getStudentName());
-        existingStudent.setMarks(studentData.getMarks());
+    public StudentDTO updateStudent(StudentDTO studentDTO) {
 
-        List<Student> allStudents = studentRepository.findAll();
-        Collections.sort(allStudents, (s1, s2) -> {
-            return (int) (s2.getMarks() - s1.getMarks());
-        });
+        Student existingStudent = studentRepository.findById(studentDTO.getId())
+                .orElseThrow(() -> new StudentExceptionHandler("Student not found with id " + studentDTO.getId()));
 
-        int rank = 1;
-        double previousMarks = Double.POSITIVE_INFINITY;
+        mapper.map(studentDTO, existingStudent);
+        System.out.println(existingStudent);
 
-        for (Student student : allStudents) {
-            if (student.getMarks() < previousMarks) {
-                student.setStudentRank(rank);
-                rank++;
-            } else {
-                student.setStudentRank(rank - 1);
-            }
-            previousMarks = student.getMarks();
-            studentRepository.save(student);
-        }
-        // Updating the student
+        List<Student> studentList = studentRepository.findAll();
+        TypeToken<List<StudentDTO>> typeToken = new TypeToken<>() {
+        };
+        List<StudentDTO> studentDTOList = mapper.map(studentList, typeToken.getType());
+        List<Student> students = calculateRank(studentDTOList);
+
         studentRepository.save(existingStudent);
-        TypeToken<StudentDTO> typeToken = new TypeToken<>() {
+        TypeToken<StudentDTO> token = new TypeToken<>() {
         };
         // Casting student class to StudentDTO
-        return mapper.map(existingStudent, typeToken.getType());
+        return mapper.map(existingStudent, token.getType());
+
     }
+
 }
