@@ -100,6 +100,7 @@ public class StudentServiceImpl implements StudentService {
         Collections.sort(allStudents, (s1, s2) -> {
             return (int) (s2.getMarks() - s1.getMarks());
         });
+
         int rank = 1;
         double previousMarks = Double.POSITIVE_INFINITY;
 
