@@ -24,11 +24,21 @@ public class SubjectController {
 
     @GetMapping
     private ResponseDTO<List<SubjectDTO>> getAllSubjects() {
-        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getAllSubject()).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getAllSubject())
+                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
+                .build();
     }
 
     @GetMapping("/{name}")
     private ResponseDTO<List<SubjectDTO>> getSubjectByName(@PathVariable String name) {
-        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getSubjectandTeacherName(name)).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        List<SubjectDTO> subjectDTOList = subjectService.getSubjectandTeacherName(name);
+        if (subjectDTOList == null)
+            return ResponseDTO.<List<SubjectDTO>>builder().data(null).message(Constants.EMPTY_LIST)
+                    .status(HttpStatus.NO_CONTENT.value())
+                    .build();
+        else
+            return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getSubjectandTeacherName(name))
+                    .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
+                    .build();
     }
 }

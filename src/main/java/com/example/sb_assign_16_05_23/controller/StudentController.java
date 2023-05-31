@@ -29,25 +29,37 @@ public class StudentController {
     private ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
         if (studentDto == null) { // check null condition for list
-            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value()).build();
+            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST).
+                    status(HttpStatus.NO_CONTENT.value())
+                    .build();
         }
 
-        return ResponseDTO.<List<StudentDTO>>builder().data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        return ResponseDTO.<List<StudentDTO>>builder().data(studentDto).message(Constants.SUCCESS_MSG).
+                status(HttpStatus.OK.value())
+                .build();
     }
 
     @PostMapping("/list")
     public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos) {
         List<StudentDTO> dtos = studentService.registerStudentList(studentDtos);
 
-        return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value())
+                .build();
     }
 
     @GetMapping("/marks/{value}")
     private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@PathVariable Double value) {
-
-
-        //returns list of students from StudentService
-        return ResponseDTO.<List<StudentDTO>>builder().data(studentService.findByMarksGreaterThan(value)).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        List<StudentDTO> dtos = studentService.findByMarksGreaterThan(value);
+        if (dtos.isEmpty())
+            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST)
+                    .status(HttpStatus.NO_CONTENT.value())
+                    .build();
+        else
+            //returns list of students from StudentService
+            return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.SUCCESS_MSG)
+                    .status(HttpStatus.OK.value())
+                    .build();
     }
 
 
