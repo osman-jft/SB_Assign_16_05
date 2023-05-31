@@ -33,16 +33,14 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<SubjectDTO> getSubjectandTeacherName(String name) {
-        subjectDtoList = Collections.singleton(subjectRepository.findSubjectByName(name)).stream()
-                .map(subject -> getSubjectTeacherName(subject)).toList();
+        subjectDtoList = Collections.singleton(subjectRepository.findSubjectByName(name)).stream().map(subject -> getSubjectTeacherName(subject)).toList();
         return subjectDtoList;
     }
 
     @Override
     public List<SubjectDTO> getAllSubject() {
 
-        subjectDtoList = subjectRepository.findAll()
-                .stream().map(subject -> modelMapper.map(subject, SubjectDTO.class)).toList();
+        subjectDtoList = subjectRepository.findAll().stream().map(subject -> modelMapper.map(subject, SubjectDTO.class)).toList();
         return subjectDtoList;
     }
 

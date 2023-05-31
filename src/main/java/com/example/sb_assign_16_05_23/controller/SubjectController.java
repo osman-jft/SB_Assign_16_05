@@ -21,15 +21,14 @@ public class SubjectController {
      */
     @Autowired
     SubjectService subjectService;
+
     @GetMapping
-    private ResponseDTO<List<SubjectDTO>>  getAllSubjects()
-    {
-        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getAllSubject())
-                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+    private ResponseDTO<List<SubjectDTO>> getAllSubjects() {
+        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getAllSubject()).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
+
     @GetMapping("/{name}")
-    private ResponseDTO<List<SubjectDTO>>  getSubjectByName(@PathVariable String name){
-        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getSubjectandTeacherName(name))
-                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+    private ResponseDTO<List<SubjectDTO>> getSubjectByName(@PathVariable String name) {
+        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getSubjectandTeacherName(name)).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 }

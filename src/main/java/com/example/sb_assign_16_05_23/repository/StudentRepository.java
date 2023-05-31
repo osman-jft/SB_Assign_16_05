@@ -11,7 +11,6 @@ import java.util.List;
 //We no longer need to create boilerplate methods like findAll()
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-
     List<Student> findByMarksGreaterThan(double value);
 
 }

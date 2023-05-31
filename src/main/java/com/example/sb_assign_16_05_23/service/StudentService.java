@@ -6,8 +6,6 @@ import com.example.sb_assign_16_05_23.entity.Student;
 import java.util.List;
 
 public interface StudentService {
-
-
     List<StudentDTO> getAllStudents();
 
     List<StudentDTO> findByMarksGreaterThan(Double value);
