@@ -10,9 +10,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,30 +59,19 @@ public class StudentServiceImpl implements StudentService {
 
         Collections.sort(students, (s1, s2) -> s2.getMarks().compareTo(s1.getMarks())); // add and sort the students list
 
-        if (!students.isEmpty()) {
-            double prevMarks = 0;
-            int prevRank = -1;
-            int i = 0;
+        Map<Double, Integer> mappingList = new HashMap<>();
+        int j = 1;
 
-            for (Student s : students) {
-                if (i == 0) { // initial case
-                    s.setStudentRank(1);
-                    i++;
-                } else {
-                    if (prevMarks == s.getMarks()) { // check prev marks == current marks
-                        s.setStudentRank((prevRank != -1) ? prevRank : i); // for the first matching pair
-                        prevRank = (prevRank != -1 ? -1 : i);
-                    } else {
-                        i++;
-                        prevRank = i;
-                        s.setStudentRank(i);
-                    }
-                }
-                prevMarks = s.getMarks();
-            }
-
+        for (Student student : students) { // set the map
+            double marks = student.getMarks();
+            if (!mappingList.containsKey(marks)) mappingList.put(marks, j++);
+            else mappingList.put(marks, mappingList.get(marks));
         }
 
+        students.forEach(student -> { // set ranks
+            double marks = student.getMarks();
+            if (mappingList.containsKey(marks)) student.setStudentRank(mappingList.get(marks));
+        });
         return students;
 
     }
