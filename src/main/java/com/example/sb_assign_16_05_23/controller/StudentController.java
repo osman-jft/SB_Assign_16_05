@@ -46,7 +46,7 @@ public class StudentController {
     }
 
     @PutMapping("/{sid}")
-    private ResponseDTO<StudentDTO> updateStudent(@PathVariable Long sid, @RequestBody StudentDTO student) {
+    private ResponseDTO<StudentDTO> updateStudent(@PathVariable("sid") Long sid, @RequestBody StudentDTO student) {
         if (!sid.equals(student.getId())) {
             return ResponseDTO.<StudentDTO>builder().data(student).message(Constants.BAD_REQUEST_MSG).status(HttpStatus.BAD_REQUEST.value()).build();
         }
