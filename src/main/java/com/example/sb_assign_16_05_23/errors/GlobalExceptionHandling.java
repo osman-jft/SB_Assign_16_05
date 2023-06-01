@@ -25,7 +25,7 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse();
         Map<String, String> errorMap = new HashMap<>();
         exc.getBindingResult().getFieldErrors().forEach(e -> {
-            String fieldName = e.getField().split("].", 2)[1]; // "list[0].studentName -> {0: list[0, 1: studentName} [1]-> studentName
+            String fieldName = e.getField(); //.split("].", 2)[1]; // "list[0].studentName -> {0: list[0, 1: studentName} [1]-> studentName
             errorMap.put(fieldName, e.getDefaultMessage());
         });
         errorResponse.setMessages(errorMap);
