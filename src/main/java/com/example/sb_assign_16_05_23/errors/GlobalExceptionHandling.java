@@ -12,9 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,5 +43,11 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         errorResponse.setStatus(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(value=SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<?> constraintViolationExceptionHandler(SQLIntegrityConstraintViolationException exception){
+        System.out.println(exception.getMessage());
+        return ResponseEntity.status(500).body(exception.getMessage());
+    }
+
 
 }
