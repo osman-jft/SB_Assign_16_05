@@ -65,5 +65,11 @@ public class StudentController {
                 .status(HttpStatus.OK.value()).build();
     }
 
+    @PutMapping
+    private ResponseDTO<StudentDTO> updateStudent(@RequestBody @Valid StudentDTO student) {
+        return ResponseDTO.<StudentDTO>builder().data(studentService.updateStudent(student))
+                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+    }
+
 }
 
