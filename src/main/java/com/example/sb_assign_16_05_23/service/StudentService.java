@@ -11,5 +11,7 @@ public interface StudentService {
 
     List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos);
 
+    StudentDTO updateStudent(StudentDTO studentDTO);
+
 }
 
