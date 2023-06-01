@@ -85,11 +85,16 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public List<StudentDTO> sortAccordingTo(String sortField) {
-        Sort sortedByField = Sort.by(sortField);
-        return studentRepository.findAll(sortedByField).stream()
-                .map(student -> mapper.map(student, StudentDTO.class))
-                .toList();
+        try {
+            Sort sortedByField = Sort.by(sortField);
+            return studentRepository.findAll(sortedByField).stream()
+                    .map(student -> mapper.map(student, StudentDTO.class))
+                    .toList();
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("Invalid sort field: " + sortField, ex);
+        }
     }
+
 
     @Override
     public StudentDTO updateStudent(StudentDTO studentDTO) {

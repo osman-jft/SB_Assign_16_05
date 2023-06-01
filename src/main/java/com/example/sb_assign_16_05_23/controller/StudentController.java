@@ -49,7 +49,7 @@ public class StudentController {
                 .build();
     }
 
-    @GetMapping("/sorted-by/rank")
+    @GetMapping("/sort/rank")
     public ResponseDTO<List<StudentDTO>> getStudentsSortedByRank() {
         return ResponseDTO.<List<StudentDTO>>builder()
                 .data(studentService.sortAccordingToRank()).message(Constants.SUCCESS_MSG)
@@ -58,7 +58,7 @@ public class StudentController {
     }
 
     //Fetch all students sorted by the given column name accepted.
-    @GetMapping("/sort-by/{sortField}")
+    @GetMapping("/sort/{sortField}")
     public ResponseDTO getStudentsSortedBy(@PathVariable String sortField) {
         return ResponseDTO.<List<StudentDTO>>builder()
                 .data(studentService.sortAccordingTo(sortField)).message(Constants.SUCCESS_MSG)
