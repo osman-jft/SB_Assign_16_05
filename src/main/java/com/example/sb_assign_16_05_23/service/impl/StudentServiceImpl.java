@@ -2,9 +2,11 @@ package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
+import com.example.sb_assign_16_05_23.errors.NotFoundException;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,4 +74,28 @@ public class StudentServiceImpl implements StudentService {
         return students;
 
     }
+
+    @Override
+    public StudentDTO updateStudent(StudentDTO studentDTO) {
+
+        Student existingStudent = studentRepository.findById(studentDTO.getId())
+                .orElseThrow(() -> new NotFoundException("Student not found with id " + studentDTO.getId()));
+
+        mapper.map(studentDTO, existingStudent);
+        System.out.println(existingStudent);
+
+        List<Student> studentList = studentRepository.findAll();
+        TypeToken<List<StudentDTO>> typeToken = new TypeToken<>() {
+        };
+        List<StudentDTO> studentDTOList = mapper.map(studentList, typeToken.getType());
+        List<Student> students = calculateRank(studentDTOList);
+
+        studentRepository.save(existingStudent);
+        TypeToken<StudentDTO> token = new TypeToken<>() {
+        };
+        // Casting student class to StudentDTO
+        return mapper.map(existingStudent, token.getType());
+
+    }
+
 }

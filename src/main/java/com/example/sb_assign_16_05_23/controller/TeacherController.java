@@ -40,11 +40,13 @@ public class TeacherController {
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setAll(teacherData))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
       }
+
       @PutMapping
     private ResponseDTO<List<TeacherDTO>> UpdateTeacher(@RequestBody TeacherDTO teacherDTO){
           return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setTeachers(teacherDTO))
                   .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
       }
+
 
 
 }
