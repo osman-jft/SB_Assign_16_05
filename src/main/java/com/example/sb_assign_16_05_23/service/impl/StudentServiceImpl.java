@@ -95,14 +95,8 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public List<StudentDTO> sortAccordingTo(String sortField) {
-        List<Student> s;
-        switch (sortField) {
-            case "name" -> s = studentRepository.findAllByOrderByStudentName();
-            case "marks" -> s = studentRepository.findAllByOrderByMarks();
-            case "rank" -> s = studentRepository.findAllByOrderByStudentRank();
-            default -> s = studentRepository.findAllByOrderById();
-        }
-        return s.stream()
+        Sort sortedByField = Sort.by(sortField);
+        return studentRepository.findAll(sortedByField).stream()
                 .map(student -> mapper.map(student, StudentDTO.class))
                 .toList();
     }
