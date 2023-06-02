@@ -41,7 +41,7 @@ public class StudentController {
     }
 
     @PostMapping("/list")
-    public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos) {
+    public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos){
         List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
 
         return ResponseDTO.<List<StudentDTO>>builder()
