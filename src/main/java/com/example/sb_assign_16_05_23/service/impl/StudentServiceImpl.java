@@ -6,24 +6,22 @@ import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class StudentServiceImpl implements StudentService {
-
 
     @Autowired
     StudentRepository studentRepository;
 
     @Autowired
     ModelMapper mapper;
-
+    
     @Override
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
@@ -34,10 +32,12 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
+    
     @Override
     public List<StudentDTO> findByMarksGreaterThan(Double value) {
         List<StudentDTO> students = studentRepository.findByMarksGreaterThan(value).stream()
                 .map(student -> mapper.map(student, StudentDTO.class))
+            
                 .toList();
         return students;
     }
@@ -79,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
                     i++;
                 } else {
                     if (prevMarks == s.getMarks()) { // check prev marks == current marks
-                        s.setStudentRank((prevRank != -1) ? prevRank : i); // for the first matching pair
+                        s.setStudentRank ((prevRank != -1) ? prevRank : i); // for the first matching pair
                         prevRank = (prevRank != -1 ? -1 : i);
                     } else {
                         i++;
