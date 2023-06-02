@@ -1,6 +1,5 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
-
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.entity.Teacher;
@@ -14,7 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TeacherServiceImpl implements TeacherService {
+public class 
+TeacherServiceImpl implements TeacherService {
 
 
     private final TeacherRepository teacherRepository;
@@ -27,6 +27,8 @@ public class TeacherServiceImpl implements TeacherService {
         this.modelMapper = modelMapper;
     }
 
+    
+    
     public Teacher teacherDTOToTeacher(TeacherDTO teacherData) {
 
         Teacher teacher = modelMapper.map(teacherData, Teacher.class);
@@ -49,7 +51,6 @@ public class TeacherServiceImpl implements TeacherService {
 
         return teachers.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
-
     //
     @Override
     public List<TeacherDTO> setTeachers(TeacherDTO teacherData) {
@@ -59,7 +60,6 @@ public class TeacherServiceImpl implements TeacherService {
 
         return teacherDTO;
     }
-
     //
     @Override
     public List<TeacherDTO> setAll(List<TeacherDTO> teacherData) {
@@ -69,6 +69,4 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherList.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).toList();
 
     }
-
-
 }
