@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class 
+public class
 TeacherServiceImpl implements TeacherService {
 
 
@@ -27,8 +27,6 @@ TeacherServiceImpl implements TeacherService {
         this.modelMapper = modelMapper;
     }
 
-    
-    
     public Teacher teacherDTOToTeacher(TeacherDTO teacherData) {
 
         Teacher teacher = modelMapper.map(teacherData, Teacher.class);
