@@ -49,7 +49,7 @@ TeacherServiceImpl implements TeacherService {
 
         return teachers.stream().map(teacher-> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
-  //
+//
     @Override
     public List<TeacherDTO> setTeachers(TeacherDTO teacherData){
 
@@ -58,7 +58,7 @@ TeacherServiceImpl implements TeacherService {
 
         return teacherDTO;
     }
-  //
+//
     @Override
     public List<TeacherDTO> setAll(List<TeacherDTO> teacherData) {
 
