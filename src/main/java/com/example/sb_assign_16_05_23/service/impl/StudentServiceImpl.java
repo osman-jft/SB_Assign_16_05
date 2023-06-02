@@ -8,6 +8,7 @@ import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -96,6 +97,25 @@ public class StudentServiceImpl implements StudentService {
         // Casting student class to StudentDTO
         return mapper.map(existingStudent, token.getType());
 
+    }
+
+    @Override
+    public List<StudentDTO> sortAccordingToRank() {
+        return studentRepository.findAllByOrderByStudentRank().stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<StudentDTO> sortAccordingTo(String sortField) {
+        try {
+            Sort sortedByField = Sort.by(sortField);
+            return studentRepository.findAll(sortedByField).stream()
+                    .map(student -> mapper.map(student, StudentDTO.class))
+                    .toList();
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("Invalid sort field: " + sortField, ex);
+        }
     }
 
 }
