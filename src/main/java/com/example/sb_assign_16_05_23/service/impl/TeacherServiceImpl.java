@@ -51,14 +51,14 @@ TeacherServiceImpl implements TeacherService {
     }
   //
     @Override
-    public List<TeacherDTO> setTeachers(TeacherDTO teacherData) {
+    public List<TeacherDTO> setTeachers(TeacherDTO teacherData){
 
         Teacher teacher = teacherDTOToTeacher(teacherData);
         teacherDTO = Collections.singletonList(modelMapper.map(teacher, TeacherDTO.class));
 
         return teacherDTO;
     }
-    //
+  //
     @Override
     public List<TeacherDTO> setAll(List<TeacherDTO> teacherData) {
 
