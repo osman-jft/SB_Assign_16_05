@@ -25,7 +25,7 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
-    
+
     @GetMapping
     private ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
@@ -39,7 +39,7 @@ public class StudentController {
                 .data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
                 .build();
     }
-    
+
     @PostMapping("/list")
     public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos) {
         List<StudentDTO> dtos =  studentService.registerStudentList(studentDtos);
