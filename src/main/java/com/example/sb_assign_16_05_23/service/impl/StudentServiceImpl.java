@@ -21,11 +21,11 @@ public class StudentServiceImpl implements StudentService{
 
    @Autowired
    ModelMapper mapper;
-  
+
     @Override
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
-        if(students.isEmpty()) {
+        if(students.isEmpty()){
             return null;
         }
         return students.stream().map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
