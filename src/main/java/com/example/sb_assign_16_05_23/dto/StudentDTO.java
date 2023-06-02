@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.dto;
 
+import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
