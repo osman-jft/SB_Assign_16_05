@@ -48,8 +48,8 @@ public class StudentController {
                 .build();
     }
 
-    @GetMapping("/marks/{value}")
-    private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@PathVariable Double value) {
+    @GetMapping("/marks")
+    private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@RequestParam("value") Double value) {
         List<StudentDTO> dtos = studentService.findByMarksGreaterThan(value);
         if (dtos.isEmpty())
             return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST)

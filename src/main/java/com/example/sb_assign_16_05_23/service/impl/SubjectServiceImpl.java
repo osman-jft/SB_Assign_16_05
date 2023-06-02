@@ -26,7 +26,9 @@ public class SubjectServiceImpl implements SubjectService {
     public List<SubjectDTO> getSubjectandTeacherName(String name) {
         Subject subject = subjectRepository.findSubjectByName(name);
         if (subject != null)
-            return subjectDtoList = Collections.singleton(subject).stream().map(sub -> getSubjectTeacherName(sub)).toList();
+            return subjectDtoList = Collections.singleton(subject).stream()
+                    .map(sub -> getSubjectTeacherName(sub))
+                    .toList();
         else
             return null;
     }
@@ -34,7 +36,9 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<SubjectDTO> getAllSubject() {
 
-        subjectDtoList = subjectRepository.findAll().stream().map(subject -> mapper.map(subject, SubjectDTO.class)).toList();
+        subjectDtoList = subjectRepository.findAll().stream()
+                .map(subject -> mapper.map(subject, SubjectDTO.class))
+                .toList();
         return subjectDtoList;
     }
 

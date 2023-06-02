@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "subject")
+//@JsonFilter(value = "subjectFilter") //used for MappingJacksonValue filtering section
 public class Subject {
 
     @Id

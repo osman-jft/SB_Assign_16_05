@@ -34,6 +34,14 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
+    @Override
+    public List<StudentDTO> findByMarksGreaterThan(Double value) {
+        List<StudentDTO> students = studentRepository.findByMarksGreaterThan(value).stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+        return students;
+    }
+
 
     @Override
     public List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos) {
@@ -86,12 +94,6 @@ public class StudentServiceImpl implements StudentService {
 
         return students;
 
-    }
-
-    @Override
-    public List<StudentDTO> findByMarksGreaterThan(Double value) {
-        List<StudentDTO> students = studentRepository.findByMarksGreaterThan(value).stream().map(student -> mapper.map(student, StudentDTO.class)).toList();
-        return students;
     }
 
 
