@@ -29,7 +29,7 @@ public class StudentController {
     @GetMapping
     private ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
-        if(studentDto == null) { // check null condition for list
+        if(studentDto == null){ // check null condition for list
             return ResponseDTO.<List<StudentDTO>>builder()
                     .data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value())
                     .build();
