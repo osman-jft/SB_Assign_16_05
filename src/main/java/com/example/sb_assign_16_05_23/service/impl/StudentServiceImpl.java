@@ -34,12 +34,12 @@ public class StudentServiceImpl implements StudentService{
 
     
     @Override
-    public List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos) {
+    public List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos){
         List<Student> students = calculateRank(studentDtos);
         List<StudentDTO> newStudentDtos = new ArrayList<>();// return the dtos List with allocated id and rank
 
         students.forEach(s -> {
-            if(s.getId() == null) { // if id=null then it is new student obj which is not registered yet
+            if(s.getId() == null){ // if id=null then it is new student obj which is not registered yet
                 studentRepository.save(s);
                 newStudentDtos.add(mapper.map(s, StudentDTO.class));
             } else studentRepository.save(s);
@@ -51,12 +51,12 @@ public class StudentServiceImpl implements StudentService{
     // recalculate rank
     @Override
     public List<Student> calculateRank(List<StudentDTO> studentDtos) {
-         List<Student> students = studentRepository.findAll(); // get student list sorted by marks
-         students.addAll(studentDtos.stream() // add the new list
-                         .map(s -> mapper.map(s, Student.class)) // map dto to entity class
-                         .collect(Collectors.toList()));
+          List<Student> students = studentRepository.findAll(); // get student list sorted by marks
+          students.addAll(studentDtos.stream() // add the new list
+                          .map(s -> mapper.map(s, Student.class)) // map dto to entity class
+                          .collect(Collectors.toList()));
 
-        Collections.sort(students, (s1, s2) -> s2.getMarks().compareTo(s1.getMarks())); // add and sort the students list
+        Collections.sort(students, (s1,s2) -> s2.getMarks().compareTo(s1.getMarks())); // add and sort the students list
 
         if (!students.isEmpty()) {
             double prevMarks = 0;
