@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class
-TeacherServiceImpl implements TeacherService {
+public class TeacherServiceImpl implements TeacherService {
 
 
     private final TeacherRepository teacherRepository;
