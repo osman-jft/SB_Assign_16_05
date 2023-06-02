@@ -27,9 +27,9 @@ TeacherServiceImpl implements TeacherService {
         this.modelMapper = modelMapper;
     }
 
-    public Teacher teacherDTOToTeacher(TeacherDTO teacherData) {
+    public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
 
-        Teacher teacher = modelMapper.map(teacherData, Teacher.class);
+        Teacher teacher =  modelMapper.map(teacherData, Teacher.class);
         List<Subject> subjects = teacherData.getSubjects()
                 .stream()
                 .map(subject -> modelMapper.map(subject, Subject.class))
@@ -47,9 +47,9 @@ TeacherServiceImpl implements TeacherService {
 
         List<Teacher> teachers = teacherRepository.findAll();
 
-        return teachers.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
+        return teachers.stream().map(teacher-> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
-    //
+  //
     @Override
     public List<TeacherDTO> setTeachers(TeacherDTO teacherData) {
 
