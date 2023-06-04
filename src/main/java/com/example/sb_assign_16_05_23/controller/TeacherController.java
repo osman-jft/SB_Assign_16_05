@@ -2,7 +2,7 @@ package com.example.sb_assign_16_05_23.controller;
 
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
-import com.example.sb_assign_16_05_23.entity.Views;
+import com.example.sb_assign_16_05_23.dto.views.Views;
 import com.example.sb_assign_16_05_23.service.TeacherService;
 import com.example.sb_assign_16_05_23.util.Constants;
 import com.fasterxml.jackson.annotation.JsonView;
