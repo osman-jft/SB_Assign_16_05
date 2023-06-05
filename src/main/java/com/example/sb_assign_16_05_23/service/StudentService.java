@@ -12,8 +12,8 @@ public interface StudentService {
     List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos);
 
     StudentDTO updateStudent(StudentDTO studentDTO);
-    List<StudentDTO> findByMarksGreaterThan(Double value);
 
+    List<StudentDTO> findByMarksGreaterThan(Double value);
 
 }
 
