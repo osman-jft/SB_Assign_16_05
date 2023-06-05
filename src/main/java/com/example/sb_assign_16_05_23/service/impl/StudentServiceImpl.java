@@ -101,21 +101,23 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDTO> sortAccordingToRank() {
-        return studentRepository.findAllByOrderByStudentRank().stream()
+        List<Student> stud=studentRepository.findAllByOrderByStudentRank();
+        if (stud.isEmpty())
+            throw new NotFoundException("Student table is empty.");
+        return stud.stream()
                 .map(student -> mapper.map(student, StudentDTO.class))
                 .toList();
     }
 
     @Override
     public List<StudentDTO> sortAccordingTo(String sortField) {
-        try {
-            Sort sortedByField = Sort.by(sortField);
-            return studentRepository.findAll(sortedByField).stream()
-                    .map(student -> mapper.map(student, StudentDTO.class))
-                    .toList();
-        } catch (Exception ex) {
-            throw new IllegalArgumentException("Invalid sort field: " + sortField, ex);
-        }
+        Sort sortedByField = Sort.by(sortField);
+        List<Student> students = studentRepository.findAll(sortedByField);
+        if (students.isEmpty())
+            throw new NotFoundException("Student table is empty.");
+        return students.stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
     }
 
 }
