@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/subjects")
-
 public class SubjectController {
 
     @Autowired
