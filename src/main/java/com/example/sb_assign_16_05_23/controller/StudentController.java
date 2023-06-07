@@ -20,7 +20,6 @@ public class StudentController {
 
     @Autowired
     private final StudentService studentService;
-
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -28,14 +27,9 @@ public class StudentController {
     @GetMapping
     private ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
-        if (studentDto == null) { // check null condition for list
-            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST).
-                    status(HttpStatus.NO_CONTENT.value())
-                    .build();
-        }
 
-        return ResponseDTO.<List<StudentDTO>>builder().data(studentDto).message(Constants.SUCCESS_MSG).
-                status(HttpStatus.OK.value())
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
                 .build();
     }
 
@@ -48,20 +42,11 @@ public class StudentController {
                 .build();
     }
 
-    @GetMapping("/marks")
-    private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@RequestParam("value") Double value) {
-        List<StudentDTO> dtos = studentService.findByMarksGreaterThan(value);
-        if (dtos.isEmpty())
-            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST)
-                    .status(HttpStatus.NO_CONTENT.value())
-                    .build();
-        else
-            //returns list of students from StudentService
-            return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.SUCCESS_MSG)
-                    .status(HttpStatus.OK.value())
-                    .build();
+    @PutMapping
+    private ResponseDTO<StudentDTO> updateStudent(@RequestBody @Valid StudentDTO student) {
+        return ResponseDTO.<StudentDTO>builder().data(studentService.updateStudent(student))
+                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
-
 
 }
 

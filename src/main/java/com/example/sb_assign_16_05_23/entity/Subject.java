@@ -19,7 +19,7 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(unique = true)
     private String name;
 
     @JsonBackReference

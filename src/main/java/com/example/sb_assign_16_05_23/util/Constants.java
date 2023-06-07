@@ -9,5 +9,6 @@ public class Constants {
     public static String CREATED = "Created";
 
 
+    public static String BAD_REQUEST_MSG = "Bad Request";
 }
 

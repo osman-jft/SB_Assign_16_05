@@ -1,6 +1,5 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
-
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.entity.Teacher;
@@ -14,12 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class
-TeacherServiceImpl implements TeacherService {
-
+public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherRepository teacherRepository;
-
     private final ModelMapper modelMapper;
     List<TeacherDTO> teacherDTO;
 
@@ -28,7 +24,7 @@ TeacherServiceImpl implements TeacherService {
         this.modelMapper = modelMapper;
     }
 
-    public Teacher teacherDTOToTeacher(TeacherDTO teacherData) {
+    public Teacher teacherDTOToTeacher(TeacherDTO teacherData){
 
         Teacher teacher = modelMapper.map(teacherData, Teacher.class);
         List<Subject> subjects = teacherData.getSubjects()
@@ -51,17 +47,13 @@ TeacherServiceImpl implements TeacherService {
         return teachers.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
 
-    //
     @Override
     public List<TeacherDTO> setTeachers(TeacherDTO teacherData) {
-
         Teacher teacher = teacherDTOToTeacher(teacherData);
         teacherDTO = Collections.singletonList(modelMapper.map(teacher, TeacherDTO.class));
-
         return teacherDTO;
     }
 
-    //
     @Override
     public List<TeacherDTO> setAll(List<TeacherDTO> teacherData) {
 
@@ -70,6 +62,4 @@ TeacherServiceImpl implements TeacherService {
         return teacherList.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).toList();
 
     }
-
-
 }
