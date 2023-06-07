@@ -1,5 +1,7 @@
 package com.example.sb_assign_16_05_23.dto;
+
 import com.example.sb_assign_16_05_23.util.views.Views;
+
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

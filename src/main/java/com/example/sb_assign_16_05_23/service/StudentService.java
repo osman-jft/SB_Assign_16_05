@@ -14,13 +14,10 @@ public interface StudentService {
 
     StudentDTO updateStudent(StudentDTO studentDTO);
 
-
-    List<StudentDTO> findByMarksGreaterThan(Double value);
-
     List<StudentDTO> sortAccordingToRank();
 
     List<StudentDTO> sortAccordingTo(String sortField);
 
-
+    List<StudentDTO> findByMarksGreaterThan(Double value);
 }
 
