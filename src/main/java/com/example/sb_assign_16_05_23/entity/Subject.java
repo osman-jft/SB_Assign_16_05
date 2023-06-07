@@ -27,7 +27,5 @@ public class Subject {
     @JoinColumn(name = "teacher_id")
     @JsonIgnore
     private Teacher teacher;
-
-// constructors, getters and setters
 }
 
