@@ -51,4 +51,13 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> illegalArgumentExceptionHandler(Exception exc) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("ErrorMessage", "Subject is not present");
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND);
+        error.setMessages(errorMap);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

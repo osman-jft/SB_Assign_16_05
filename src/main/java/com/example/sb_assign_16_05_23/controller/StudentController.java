@@ -48,5 +48,19 @@ public class StudentController {
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
+    @GetMapping("/marks")
+    private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@RequestParam("value") Double value) {
+        List<StudentDTO> dtos = studentService.findByMarksGreaterThan(value);
+        if (dtos.isEmpty())
+            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST)
+                    .status(HttpStatus.NO_CONTENT.value())
+                    .build();
+        else
+            //returns list of students from StudentService
+            return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.SUCCESS_MSG)
+                    .status(HttpStatus.OK.value())
+                    .build();
+    }
+
 }
 

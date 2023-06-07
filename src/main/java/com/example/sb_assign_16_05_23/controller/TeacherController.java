@@ -1,11 +1,12 @@
 package com.example.sb_assign_16_05_23.controller;
 
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
-import com.example.sb_assign_16_05_23.dto.SubjectDTO;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.service.SubjectService;
 import com.example.sb_assign_16_05_23.service.TeacherService;
 import com.example.sb_assign_16_05_23.util.Constants;
+import com.example.sb_assign_16_05_23.util.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class TeacherController {
     }
 
     @GetMapping
+    @JsonView(Views.TeacherView.class)
     private ResponseDTO<List<TeacherDTO>> getTeachers() {
         //returns list of students from StudentService
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers())
