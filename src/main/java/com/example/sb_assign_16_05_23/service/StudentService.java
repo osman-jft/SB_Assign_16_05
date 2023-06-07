@@ -14,5 +14,9 @@ public interface StudentService {
 
     StudentDTO updateStudent(StudentDTO studentDTO);
 
+    List<StudentDTO> sortAccordingToRank();
+
+    List<StudentDTO> sortAccordingTo(String sortField);
+
 }
 

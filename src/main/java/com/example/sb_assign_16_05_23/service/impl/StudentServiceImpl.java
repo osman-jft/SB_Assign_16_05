@@ -8,6 +8,7 @@ import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -94,6 +95,27 @@ public class StudentServiceImpl implements StudentService {
         // Casting student class to StudentDTO
         return mapper.map(existingStudent, token.getType());
 
+    }
+
+    @Override
+    public List<StudentDTO> sortAccordingToRank() {
+        List<Student> stud=studentRepository.findAllByOrderByStudentRank();
+        if (stud.isEmpty())
+            throw new NotFoundException("Student table is empty.");
+        return stud.stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<StudentDTO> sortAccordingTo(String sortField) {
+        Sort sortedByField = Sort.by(sortField);
+        List<Student> students = studentRepository.findAll(sortedByField);
+        if (students.isEmpty())
+            throw new NotFoundException("Student table is empty.");
+        return students.stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
     }
 
 }
