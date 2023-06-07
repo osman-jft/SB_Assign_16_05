@@ -20,8 +20,6 @@ import java.util.List;
 public class TeacherDTO {
 
     Long id;
-
-
     @NotNull(message = "Name can not be null")
     @NotBlank(message = "Name can not be blank")
     String name;

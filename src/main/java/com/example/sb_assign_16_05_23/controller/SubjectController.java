@@ -30,14 +30,8 @@ public class SubjectController {
     @GetMapping("/name")
     private ResponseDTO<List<SubjectDTO>> getSubjectByName(@RequestParam(value = "subject_name") String subject_name/*@PathVariable String name*/) {
         List<SubjectDTO> subjectDTOList = subjectService.getSubjectandTeacherName(subject_name);
-        if (subjectDTOList == null)
-            return ResponseDTO.<List<SubjectDTO>>builder().data(null).message(Constants.EMPTY_LIST)
-                    .status(HttpStatus.NO_CONTENT.value())
-                    .build();
-        else
             return ResponseDTO.<List<SubjectDTO>>builder().data(subjectDTOList)
                     .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
                     .build();
     }
-
 }
