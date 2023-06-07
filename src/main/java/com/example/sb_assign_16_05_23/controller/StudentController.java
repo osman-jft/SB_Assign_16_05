@@ -27,11 +27,6 @@ public class StudentController {
     @GetMapping
     private ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
-        if (studentDto == null) { // check null condition for list
-            return ResponseDTO.<List<StudentDTO>>builder()
-                    .data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value())
-                    .build();
-        }
 
         return ResponseDTO.<List<StudentDTO>>builder()
                 .data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())

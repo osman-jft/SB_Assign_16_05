@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -25,17 +24,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
-        if (students.isEmpty()) {
-            return null;
-        }
-        return students.stream().map(student -> mapper.map(student, StudentDTO.class)).collect(Collectors.toList());
+        if (students.isEmpty()) throw new NotFoundException("Student list is empty");
 
+        return students.stream().map(student -> mapper.map(student, StudentDTO.class)).toList();
     }
 
 
     @Override
     public List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos) {
-        List<Student> students = calculateRank(studentDtos);
+        List<Student> newStudent = studentDtos.stream().map(s -> mapper.map(s, Student.class)).toList();
+        List<Student> students = calculateRank(newStudent);
         List<StudentDTO> newStudentDtos = new ArrayList<>();// return the dtos List with allocated id and rank
 
         students.forEach(s -> {
@@ -50,16 +48,22 @@ public class StudentServiceImpl implements StudentService {
 
     // recalculate rank
     @Override
-    public List<Student> calculateRank(List<StudentDTO> studentDtos) {
-        List<Student> students = studentRepository.findAll(); // get student list sorted by marks
-        students.addAll(studentDtos.stream() // add the new list
-                .map(s -> mapper.map(s, Student.class)) // map dto to entity class
-                .collect(Collectors.toList()));
+    public List<Student> calculateRank(List<Student> newStudent) {
+        double highest = newStudent.stream().max((s1, s2) -> s1.getMarks().compareTo(s2.getMarks())).get().getMarks();
 
-        Collections.sort(students, (s1, s2) -> s2.getMarks().compareTo(s1.getMarks())); // add and sort the students list
+        // list of students having marks smaller than given dto list(highest marks)
+        List<Student> students = studentRepository.findAllByMarksLessThanEqualOrderByMarksDesc(highest);
+
+        // if students list have no marks smaller than dto's highest marks
+        Student filterStudent = students.isEmpty() ? studentRepository.findFirstByOrderByMarks() : null;
+
+        int ifRank = filterStudent != null ? filterStudent.getStudentRank() + 1 : 1; // if both list is empty than rank=1
+        int j = (students.isEmpty() ? ifRank : students.get(0).getStudentRank());
+
+        students.addAll(newStudent);
+        students.sort((s1, s2) -> s2.getMarks().compareTo(s1.getMarks()));
 
         Map<Double, Integer> mappingList = new HashMap<>();
-        int j = 1;
 
         for (Student student : students) { // set the map
             double marks = student.getMarks();
@@ -71,24 +75,18 @@ public class StudentServiceImpl implements StudentService {
             double marks = student.getMarks();
             if (mappingList.containsKey(marks)) student.setStudentRank(mappingList.get(marks));
         });
-        return students;
 
+        return students;
     }
 
     @Override
     public StudentDTO updateStudent(StudentDTO studentDTO) {
 
-        Student existingStudent = studentRepository.findById(studentDTO.getId())
-                .orElseThrow(() -> new NotFoundException("Student not found with id " + studentDTO.getId()));
+        Student existingStudent = studentRepository.findById(studentDTO.getId()).orElseThrow(() -> new NotFoundException("Student not found with id " + studentDTO.getId()));
 
         mapper.map(studentDTO, existingStudent);
-        System.out.println(existingStudent);
 
-        List<Student> studentList = studentRepository.findAll();
-        TypeToken<List<StudentDTO>> typeToken = new TypeToken<>() {
-        };
-        List<StudentDTO> studentDTOList = mapper.map(studentList, typeToken.getType());
-        List<Student> students = calculateRank(studentDTOList);
+        calculateRank(studentRepository.findAll());
 
         studentRepository.save(existingStudent);
         TypeToken<StudentDTO> token = new TypeToken<>() {
