@@ -27,6 +27,7 @@ public class SubjectController {
         return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getAllSubjects(name))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
+
     @GetMapping("/name")
     private ResponseDTO<List<SubjectDTO>> getSubjectByName(@RequestParam(value = "subject_name") String subject_name/*@PathVariable String name*/) {
         List<SubjectDTO> subjectDTOList = subjectService.getSubjectandTeacherName(subject_name);
