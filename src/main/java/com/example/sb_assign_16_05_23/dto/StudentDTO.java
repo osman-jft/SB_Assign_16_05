@@ -14,7 +14,6 @@ public class StudentDTO {
     //the fields of DTO should match the entity's field
     Long id;
 
-    @NotNull(message = "Name can not be null")
     @NotBlank(message = "Name can not be blank")
     String studentName;
 

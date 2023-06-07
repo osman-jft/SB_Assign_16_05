@@ -8,9 +8,11 @@ import java.util.List;
 public interface StudentService {
     List<StudentDTO> getAllStudents();
 
-    List<Student> calculateRank(List<StudentDTO> studentDto);
+    List<Student> calculateRank(List<Student> studentDto);
 
     List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos);
+
+    StudentDTO updateStudent(StudentDTO studentDTO);
 
 }
 

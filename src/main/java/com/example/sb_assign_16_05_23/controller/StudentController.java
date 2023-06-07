@@ -20,7 +20,6 @@ public class StudentController {
 
     @Autowired
     private final StudentService studentService;
-
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -28,18 +27,26 @@ public class StudentController {
     @GetMapping
     private ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
-        if (studentDto == null) { // check null condition for list
-            return ResponseDTO.<List<StudentDTO>>builder().data(null).message(Constants.EMPTY_LIST).status(HttpStatus.NO_CONTENT.value()).build();
-        }
 
-        return ResponseDTO.<List<StudentDTO>>builder().data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(studentDto).message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
+                .build();
     }
 
     @PostMapping("/list")
     public ResponseDTO<List<StudentDTO>> registerStudentsList(@RequestBody @Valid ValidList<StudentDTO> studentDtos) {
         List<StudentDTO> dtos = studentService.registerStudentList(studentDtos);
 
-        return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value()).build();
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(dtos).message(Constants.CREATED).status(HttpStatus.CREATED.value())
+                .build();
     }
+
+    @PutMapping
+    private ResponseDTO<StudentDTO> updateStudent(@RequestBody @Valid StudentDTO student) {
+        return ResponseDTO.<StudentDTO>builder().data(studentService.updateStudent(student))
+                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+    }
+
 }
 
