@@ -29,11 +29,11 @@ public class SubjectController {
 
     @GetMapping("/subject")
     private ResponseDTO<List<SubjectDTO>> getSubjectByName(@RequestParam(value = "name") String name) {
-            List<SubjectDTO> subjectDTOS = subjectService.getSubjectandTeacherName(name);
-            return ResponseDTO.<List<SubjectDTO>>builder()
-                    .data(subjectDTOS)
-                    .message(Constants.SUCCESS_MSG)
-                    .status(HttpStatus.OK.value()).build();
+        List<SubjectDTO> subjectDTOS = subjectService.getSubjectandTeacherName(name);
+        return ResponseDTO.<List<SubjectDTO>>builder()
+                .data(subjectDTOS)
+                .message(Constants.SUCCESS_MSG)
+                .status(HttpStatus.OK.value()).build();
     }
 
 }

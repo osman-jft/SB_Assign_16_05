@@ -56,7 +56,6 @@ public class StudentController {
                     .status(HttpStatus.NO_CONTENT.value())
                     .build();
         else
-            //returns list of students from StudentService
             return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.SUCCESS_MSG)
                     .status(HttpStatus.OK.value())
                     .build();

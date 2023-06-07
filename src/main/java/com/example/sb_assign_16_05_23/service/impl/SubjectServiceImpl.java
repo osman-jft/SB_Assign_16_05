@@ -30,7 +30,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<SubjectDTO> getSubjectandTeacherName(String name) throws IllegalArgumentException{
+    public List<SubjectDTO> getSubjectandTeacherName(String name) throws IllegalArgumentException {
         Subject subject = subjectRepository.findSubjectByName(name);
         List<SubjectDTO> subjectDTOList = Collections.singletonList(subject).stream()
                 .map(subject1 -> modelMapper.map(subject, SubjectDTO.class)).toList();
