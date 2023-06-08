@@ -26,6 +26,4 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Subject> subjects;
-
-// constructors, getters and setters
 }

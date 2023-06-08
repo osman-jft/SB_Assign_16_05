@@ -2,6 +2,8 @@ package com.example.sb_assign_16_05_23.errors;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mapping.MappingException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -49,6 +51,17 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         error.setStatus(HttpStatus.NOT_FOUND);
         error.setMessages(errorMap);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    // Exception handler for handling invalid sort field
+    @ExceptionHandler({PropertyReferenceException.class, MappingException.class})
+    protected ResponseEntity<ErrorResponse> handleInvalidSortField(RuntimeException exc) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("ErrorMessage", exc.getMessage());
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.BAD_REQUEST);
+        error.setMessages(errorMap);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 }

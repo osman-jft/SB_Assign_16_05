@@ -48,5 +48,22 @@ public class StudentController {
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
+    @GetMapping("/sort/rank")
+    public ResponseDTO<List<StudentDTO>> getStudentsSortedByRank() {
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(studentService.sortAccordingToRank()).message(Constants.SUCCESS_MSG)
+                .status(HttpStatus.OK.value())
+                .build();
+    }
+
+    //Fetch all students sorted by the given column name accepted.
+    @GetMapping("/sort/{sortField}")
+    public ResponseDTO getStudentsSortedBy(@PathVariable String sortField) {
+        return ResponseDTO.<List<StudentDTO>>builder()
+                .data(studentService.sortAccordingTo(sortField)).message(Constants.SUCCESS_MSG)
+                .status(HttpStatus.OK.value())
+                .build();
+    }
+
 }
 
