@@ -17,14 +17,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SubjectDTO {
 
-    @JsonView(Views.TeacherView.class)
+
     Long id;
 
-    @JsonView(Views.TeacherView.class)
+
     @NotNull(message = "Name can not be null")
     @NotBlank(message = "Name can not be blank")
     String name;
 
-    String teacherName;
 
 }

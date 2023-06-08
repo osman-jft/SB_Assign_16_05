@@ -24,7 +24,6 @@ public class TeacherController {
     }
 
     @GetMapping
-    @JsonView(Views.TeacherView.class)
     private ResponseDTO<List<TeacherDTO>> getTeachers() {
         //returns list of students from StudentService
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers())

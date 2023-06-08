@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-@JsonView(Views.TeacherView.class)
+//@JsonView(Views.TeacherView.class)
 public class ResponseDTO<T> {
 
     private T data;

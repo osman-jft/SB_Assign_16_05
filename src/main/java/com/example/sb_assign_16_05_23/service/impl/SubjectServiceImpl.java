@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
+import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.SubjectDTO;
 import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.errors.NotFoundException;
@@ -33,19 +34,10 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<SubjectDTO> getSubjectandTeacherName(String name) {
+    public String getSubjectandTeacherName(String name) {
         Subject subject = subjectRepository.findSubjectByName(name);
-        /*if (subject == null) {
-            throw new NotFoundException("Subject not present");
-        }
-        List<SubjectDTO> subjectDTOList = Collections.singletonList(subject).stream()
-                .map(subject1 -> modelMapper.map(subject, SubjectDTO.class)).toList();*/
-        List<SubjectDTO> subjectDTOList = Optional.ofNullable(subject)
-                .map(singleSubject -> Collections.singletonList(singleSubject).stream()
-                        .map(subject1 -> modelMapper.map(subject1, SubjectDTO.class))
-                        .toList())
-                .orElseThrow(()-> new NotFoundException("Subject Not found"));
-
-        return subjectDTOList;
+        Subject subop = Optional.ofNullable(subject)
+                .orElseThrow(()->new NotFoundException("Subject not found "));
+        return "Teacher Name : " + subject.getTeacher().getName();
     }
 }

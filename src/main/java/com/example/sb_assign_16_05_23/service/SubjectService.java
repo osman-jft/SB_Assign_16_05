@@ -9,5 +9,5 @@ public interface SubjectService {
 
     public List<SubjectDTO> getAllSubjects(String teacherName);
 
-    List<SubjectDTO> getSubjectandTeacherName(String name);
+    String getSubjectandTeacherName(String name);
 }
