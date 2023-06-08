@@ -2,30 +2,32 @@ package com.example.sb_assign_16_05_23.service.impl;
 
 import com.example.sb_assign_16_05_23.dto.SubjectDTO;
 import com.example.sb_assign_16_05_23.entity.Subject;
+import com.example.sb_assign_16_05_23.errors.NotFoundException;
 import com.example.sb_assign_16_05_23.repository.SubjectRepository;
 import com.example.sb_assign_16_05_23.repository.TeacherRepository;
 import com.example.sb_assign_16_05_23.service.SubjectService;
 import org.modelmapper.ModelMapper;
-import com.example.sb_assign_16_05_23.entity.Teacher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final ModelMapper modelMapper;
-    public SubjectServiceImpl(TeacherRepository teacherRepository, SubjectRepository subjectRepository , ModelMapper modelMapper) {
-        this.subjectRepository=subjectRepository;
+
+    public SubjectServiceImpl(TeacherRepository teacherRepository, SubjectRepository subjectRepository, ModelMapper modelMapper) {
+        this.subjectRepository = subjectRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<SubjectDTO> getAllSubjects(String teacherName){
-        List<SubjectDTO> subjectDTOList=subjectRepository.findByTeacherName(teacherName).stream()
-                .map(subject -> modelMapper.map(subject,SubjectDTO.class))
+    public List<SubjectDTO> getAllSubjects(String teacherName) {
+        List<SubjectDTO> subjectDTOList = subjectRepository.findByTeacherName(teacherName).stream()
+                .map(subject -> modelMapper.map(subject, SubjectDTO.class))
                 .toList();
         return subjectDTOList;
     }
@@ -33,8 +35,16 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<SubjectDTO> getSubjectandTeacherName(String name) {
         Subject subject = subjectRepository.findSubjectByName(name);
+        /*if (subject == null) {
+            throw new NotFoundException("Subject not present");
+        }
         List<SubjectDTO> subjectDTOList = Collections.singletonList(subject).stream()
-                .map(subject1 -> modelMapper.map(subject, SubjectDTO.class)).toList();
+                .map(subject1 -> modelMapper.map(subject, SubjectDTO.class)).toList();*/
+        List<SubjectDTO> subjectDTOList = Optional.ofNullable(subject)
+                .map(singleSubject -> Collections.singletonList(singleSubject).stream()
+                        .map(subject1 -> modelMapper.map(subject1, SubjectDTO.class))
+                        .toList())
+                .orElseThrow(()-> new NotFoundException("Subject Not found"));
 
         return subjectDTOList;
     }
