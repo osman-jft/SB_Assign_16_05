@@ -121,6 +121,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<StudentDTO> findByMarksGreaterThan(Double value) {
+        List<StudentDTO> students = studentRepository.findByMarksGreaterThan(value).stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+        if(students.isEmpty()) {
+            throw new NotFoundException("Student not present");
+        }
+        return students;
+    }
+
+    @Override
     public List<Pair<String>> getStudentPairEqualsToSum(Double target) {
         // Getting all the students form DB
         List<StudentDTO> studentDTOList = getAllStudents();
@@ -141,6 +152,5 @@ public class StudentServiceImpl implements StudentService {
             throw new NotFoundException("There is no pair of Students whose sum is equal to " + target);
         }
         return pairList;
-    }
-  
+    }  
 }

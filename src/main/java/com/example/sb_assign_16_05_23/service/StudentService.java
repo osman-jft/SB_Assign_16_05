@@ -19,6 +19,8 @@ public interface StudentService {
 
     List<StudentDTO> sortAccordingTo(String sortField);
 
+    List<StudentDTO> findByMarksGreaterThan(Double value);
+  
     List<Pair<String>> getStudentPairEqualsToSum(Double target);
 
 }
