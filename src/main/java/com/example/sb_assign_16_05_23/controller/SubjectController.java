@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,5 +26,13 @@ public class SubjectController {
     ResponseDTO<List<SubjectDTO>> listOfSubjects(@PathVariable String name){
         return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getAllSubjects(name))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
+    }
+
+    @GetMapping("/name")
+    private ResponseDTO<String> getSubjectByName(@RequestParam(value = "subject_name") String subject_name) {
+        String teacherName = subjectService.getSubjectandTeacherName(subject_name);
+        return ResponseDTO.<String>builder().data(teacherName)
+                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
+                .build();
     }
 }

@@ -118,4 +118,14 @@ public class StudentServiceImpl implements StudentService {
                 .toList();
     }
 
+    @Override
+    public List<StudentDTO> findByMarksGreaterThan(Double value) {
+        List<StudentDTO> students = studentRepository.findByMarksGreaterThan(value).stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+        if(students.isEmpty()) {
+            throw new NotFoundException("Student not present");
+        }
+        return students;
+    }
 }
