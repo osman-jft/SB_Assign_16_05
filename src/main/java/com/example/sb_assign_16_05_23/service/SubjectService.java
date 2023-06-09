@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SubjectService {
     public List<SubjectDTO> getAllSubjects(String teacherName);
+    String getSubjectandTeacherName(String name);
 }
