@@ -1,4 +1,6 @@
 package com.example.sb_assign_16_05_23.errors;
+
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mapping.MappingException;
 import org.springframework.data.mapping.PropertyReferenceException;

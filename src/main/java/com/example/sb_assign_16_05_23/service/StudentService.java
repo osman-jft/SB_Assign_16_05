@@ -9,7 +9,7 @@ import java.util.List;
 public interface StudentService {
     List<StudentDTO> getAllStudents();
 
-    List<Student> calculateRank(List<Student> studentDto);
+    List<Student> calculateRank(List<StudentDTO> studentDto);
 
     List<StudentDTO> registerStudentList(List<StudentDTO> studentDtos);
 
@@ -18,6 +18,8 @@ public interface StudentService {
     List<StudentDTO> sortAccordingToRank();
 
     List<StudentDTO> sortAccordingTo(String sortField);
+
+    List<StudentDTO> findByMarksGreaterThan(Double value);
 
     List<Pair<String>> getStudentPairEqualsToSum(Double target);
 

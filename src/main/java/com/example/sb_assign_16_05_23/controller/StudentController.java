@@ -73,5 +73,12 @@ public class StudentController {
                 .build();
     }
 
+    @GetMapping("/marks")
+    private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@RequestParam("value") Double value) {
+        List<StudentDTO> dtos = studentService.findByMarksGreaterThan(value);
+        return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.SUCCESS_MSG)
+                .status(HttpStatus.OK.value())
+                .build();
+    }
 }
 
