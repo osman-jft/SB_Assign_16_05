@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -80,7 +83,6 @@ public class StudentServiceImpl implements StudentService {
         });
 
         return students;
-
     }
 
     @Override
@@ -102,7 +104,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDTO> sortAccordingToRank() {
-        List<Student> stud=studentRepository.findAllByOrderByStudentRank();
+        List<Student> stud = studentRepository.findAllByOrderByStudentRank();
         if (stud.isEmpty())
             throw new NotFoundException("Student table is empty.");
         return stud.stream()
@@ -126,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
         List<StudentDTO> students = studentRepository.findByMarksGreaterThan(value).stream()
                 .map(student -> mapper.map(student, StudentDTO.class))
                 .toList();
-        if(students.isEmpty()) {
+        if (students.isEmpty()) {
             throw new NotFoundException("Student not present");
         }
         return students;
@@ -153,5 +155,5 @@ public class StudentServiceImpl implements StudentService {
             throw new NotFoundException("There is no pair of Students whose sum is equal to " + target);
         }
         return pairList;
-    }
+    }  
 }
