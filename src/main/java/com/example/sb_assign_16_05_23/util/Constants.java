@@ -10,4 +10,3 @@ public class Constants {
 
     public static String BAD_REQUEST_MSG = "Bad Request";
 }
-

@@ -5,8 +5,6 @@ import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.service.SubjectService;
 import com.example.sb_assign_16_05_23.service.TeacherService;
 import com.example.sb_assign_16_05_23.util.Constants;
-import com.example.sb_assign_16_05_23.util.views.Views;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
