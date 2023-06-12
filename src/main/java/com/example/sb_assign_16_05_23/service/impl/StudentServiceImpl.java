@@ -1,16 +1,22 @@
 package com.example.sb_assign_16_05_23.service.impl;
 
+import com.example.sb_assign_16_05_23.dto.Pair;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.entity.Student;
+import com.example.sb_assign_16_05_23.errors.BadRequestException;
 import com.example.sb_assign_16_05_23.errors.NotFoundException;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -96,4 +102,58 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
+    @Override
+    public List<StudentDTO> sortAccordingToRank() {
+        List<Student> stud = studentRepository.findAllByOrderByStudentRank();
+        if (stud.isEmpty())
+            throw new NotFoundException("Student table is empty.");
+        return stud.stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<StudentDTO> sortAccordingTo(String sortField) {
+        Sort sortedByField = Sort.by(sortField);
+        List<Student> students = studentRepository.findAll(sortedByField);
+        if (students.isEmpty())
+            throw new NotFoundException("Student table is empty.");
+        return students.stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<StudentDTO> findByMarksGreaterThan(Double value) {
+        List<StudentDTO> students = studentRepository.findByMarksGreaterThan(value).stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .toList();
+        if (students.isEmpty()) {
+            throw new NotFoundException("Student not present");
+        }
+        return students;
+    }
+
+    @Override
+    public List<Pair<String>> getStudentPairEqualsToSum(Double target) {
+        // Getting all the students form DB
+        List<StudentDTO> studentDTOList = getAllStudents();
+        // Checking Edge Case Here
+        Double sum = studentDTOList.stream().map(StudentDTO::getMarks).reduce((double) 0, Double::sum);
+        if (target > sum) throw new BadRequestException("Target Should be less then 1200");
+        List<Pair<String>> pairList = new ArrayList<>();
+        Map<Double, String> map = new HashMap<>();
+
+        for (StudentDTO student : studentDTOList) {
+            Double remainTarget = target - student.getMarks();
+            if (map.containsKey(remainTarget)) {
+                pairList.add(new Pair<>(map.get(remainTarget), student.getStudentName()));
+            }
+            map.put(student.getMarks(), student.getStudentName());
+        }
+        if (pairList.isEmpty()) {
+            throw new NotFoundException("There is no pair of Students whose sum is equal to " + target);
+        }
+        return pairList;
+    }  
 }

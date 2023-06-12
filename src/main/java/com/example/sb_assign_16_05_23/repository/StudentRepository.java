@@ -11,8 +11,11 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
+    List<Student> findAllByOrderByStudentRank();
+
     Student findFirstByOrderByMarks();
 
     List<Student> findAllByMarksLessThanEqualOrderByMarksDesc(Double marks);
 
+    List<Student> findByMarksGreaterThan(double value);
 }

@@ -3,6 +3,7 @@ package com.example.sb_assign_16_05_23.service.impl;
 import com.example.sb_assign_16_05_23.dto.TeacherDTO;
 import com.example.sb_assign_16_05_23.entity.Subject;
 import com.example.sb_assign_16_05_23.entity.Teacher;
+import com.example.sb_assign_16_05_23.errors.NotFoundException;
 import com.example.sb_assign_16_05_23.repository.TeacherRepository;
 import com.example.sb_assign_16_05_23.service.TeacherService;
 import org.modelmapper.ModelMapper;
@@ -43,6 +44,7 @@ public class TeacherServiceImpl implements TeacherService {
     public List<TeacherDTO> getAllTeachers() {
 
         List<Teacher> teachers = teacherRepository.findAll();
+        if (teachers.isEmpty()) throw new NotFoundException("Teacher list is empty");
 
         return teachers.stream().map(teacher -> modelMapper.map(teacher, TeacherDTO.class)).collect(Collectors.toList());
     }
