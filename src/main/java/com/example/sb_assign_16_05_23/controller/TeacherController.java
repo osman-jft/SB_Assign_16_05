@@ -23,26 +23,26 @@ public class TeacherController {
     }
 
     @GetMapping
-    private ResponseDTO<List<TeacherDTO>> getTeachers() {
+    public ResponseDTO<List<TeacherDTO>> getTeachers() {
         //returns list of students from StudentService
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.getAllTeachers())
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
     @PostMapping
-    private ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody @Valid TeacherDTO teacherData) {
+    public ResponseDTO<List<TeacherDTO>> setTeachers(@RequestBody @Valid TeacherDTO teacherData) {
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setTeachers(teacherData))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
     @PostMapping("/list")
-    private ResponseDTO<List<TeacherDTO>> setAll(@RequestBody @Valid ValidList<TeacherDTO> teacherData) {
+    public ResponseDTO<List<TeacherDTO>> setAll(@RequestBody @Valid ValidList<TeacherDTO> teacherData) {
         return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setAll(teacherData))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
       }
 
       @PutMapping
-    private ResponseDTO<List<TeacherDTO>> UpdateTeacher(@RequestBody @Valid TeacherDTO teacherDTO){
+    public ResponseDTO<List<TeacherDTO>> UpdateTeacher(@RequestBody @Valid TeacherDTO teacherDTO){
           return ResponseDTO.<List<TeacherDTO>>builder().data(teacherService.setTeachers(teacherDTO))
                   .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
       }

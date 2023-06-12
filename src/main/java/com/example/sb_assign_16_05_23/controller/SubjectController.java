@@ -29,7 +29,7 @@ public class SubjectController {
     }
 
     @GetMapping("/name")
-    private ResponseDTO<String> getSubjectByName(@RequestParam(value = "subject_name") String subject_name) {
+    public ResponseDTO<String> getSubjectByName(@RequestParam(value = "subject_name") String subject_name) {
         String teacherName = subjectService.getSubjectandTeacherName(subject_name);
         return ResponseDTO.<String>builder().data(teacherName)
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
