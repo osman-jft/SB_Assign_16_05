@@ -25,7 +25,7 @@ public class StudentController {
     }
 
     @GetMapping
-    private ResponseDTO<List<StudentDTO>> getStudents() {
+    public ResponseDTO<List<StudentDTO>> getStudents() {
         List<StudentDTO> studentDto = studentService.getAllStudents();
 
         return ResponseDTO.<List<StudentDTO>>builder()
@@ -43,7 +43,7 @@ public class StudentController {
     }
 
     @PutMapping
-    private ResponseDTO<StudentDTO> updateStudent(@RequestBody @Valid StudentDTO student) {
+    public ResponseDTO<StudentDTO> updateStudent(@RequestBody @Valid StudentDTO student) {
         return ResponseDTO.<StudentDTO>builder().data(studentService.updateStudent(student))
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
@@ -66,7 +66,7 @@ public class StudentController {
     }
 
     @GetMapping("/marks")
-    private ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@RequestParam("value") Double value) {
+    public ResponseDTO<List<StudentDTO>> getStudentsGreaterthan(@RequestParam("value") Double value) {
         List<StudentDTO> dtos = studentService.findByMarksGreaterThan(value);
         return ResponseDTO.<List<StudentDTO>>builder().data(dtos).message(Constants.SUCCESS_MSG)
                 .status(HttpStatus.OK.value())

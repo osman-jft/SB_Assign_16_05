@@ -19,10 +19,16 @@ public class LoggingAspect {
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
 // Log before method execution
         logger.info("Before method: " + joinPoint.getSignature().getName());
+        long startTime = System.currentTimeMillis();
+        logger.info("Start Time: "+ startTime);
 // Execute the method and get the result
         Object result = joinPoint.proceed();
 // Log after method execution
         logger.info("After method: " + joinPoint.getSignature().getName());
+        long endTime = System.currentTimeMillis();
+
+        logger.info("End Time: "+ endTime);
+        logger.info("Total Time: "+ (endTime-startTime)+ "ms" );
 // Return the result
         return result;
     }
