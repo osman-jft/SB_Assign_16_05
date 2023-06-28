@@ -9,5 +9,5 @@
     <include file="db/changelog/changelog-student.xml"/>
     <include file="db/changelog/changelog-teacher.xml"/>
     <include file="db/changelog/changelog-subject.xml"/>
-
+    <include file="db/changelog/addingColumnInSubject.xml"/>
 </databaseChangeLog>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="7" author="Nikhil Rastogi">
+        <comment>Adding columns in subject table</comment>
+        <addColumn tableName="subject">
+            <column name="from_date" type="datetime(6)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="to_date" type="datetime(6)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+    <changeSet id="8" author="Nikhil Rastogi">
+        <comment>Updating values in subject table</comment>
+        <update tableName="subject" >
+
+            <column name="from_date" value="2023-05-08 05:30:00.000000" />
+            <column name="to_date" value="2023-06-08 15:01:16.000000"/>
+            <where>id='1'</where>
+        </update>
+        <update tableName="subject">
+
+
+            <column name="from_date" value="2023-02-08 15:02:43.000000"/>
+            <column name="to_date" value="2023-06-08 15:01:56.000000"/>
+            <where>id='2'</where>
+        </update>
+        <update tableName="subject">
+
+
+            <column name="from_date" value="2023-05-08 15:02:10.000000"/>
+            <column name="to_date" value="2023-07-08 15:01:25.000000"/>
+            <where>id='3'</where>
+        </update>
+        <update tableName="subject">
+
+            <column name="from_date" value="2023-04-08 15:02:20.000000"/>
+            <column name="to_date" value="2023-07-08 15:01:34.000000"/>
+            <where>id='4'</where>
+        </update>
+
+    </changeSet>
+</databaseChangeLog>

@@ -2,37 +2,29 @@ package com.example.sb_assign_16_05_23.controller;
 
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.SubjectDTO;
+import com.example.sb_assign_16_05_23.dto.SubjectListDTO;
 import com.example.sb_assign_16_05_23.service.SubjectService;
 import com.example.sb_assign_16_05_23.util.Constants;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/teachers")
+@RequestMapping("/api/subjects")
+@AllArgsConstructor
 public class SubjectController {
     private final SubjectService subjectService;
+    @GetMapping
+    ResponseDTO<List<SubjectDTO>> listOfSubjects( @Valid SubjectListDTO subjectListDTO) {
 
-    public SubjectController(SubjectService subjectService) {
-        this.subjectService = subjectService;
-    }
+        List<SubjectDTO>subjectDTOList=subjectService.getAllSubjectsByTeacherAndFromDateAndToDate(subjectListDTO);
 
-    @GetMapping("/{name}")
-    ResponseDTO<List<SubjectDTO>> listOfSubjects(@PathVariable String name){
-        return ResponseDTO.<List<SubjectDTO>>builder().data(subjectService.getAllSubjects(name))
+        return ResponseDTO.<List<SubjectDTO>>builder().data(
+                        subjectDTOList)
                 .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value()).build();
     }
 
-    @GetMapping("/name")
-    private ResponseDTO<String> getSubjectByName(@RequestParam(value = "subject_name") String subject_name) {
-        String teacherName = subjectService.getSubjectandTeacherName(subject_name);
-        return ResponseDTO.<String>builder().data(teacherName)
-                .message(Constants.SUCCESS_MSG).status(HttpStatus.OK.value())
-                .build();
-    }
 }
