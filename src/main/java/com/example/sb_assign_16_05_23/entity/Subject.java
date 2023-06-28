@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
+
+
+import java.util.Date;
 
 @Entity
 @Data
@@ -20,13 +24,16 @@ public class Subject {
 
     @Column(unique = true)
     private String name;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fromDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date toDate;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "teacher_id")
+    @BatchSize(size = 10)
     @JsonIgnore
     private Teacher teacher;
-
-// constructors, getters and setters
 }
 

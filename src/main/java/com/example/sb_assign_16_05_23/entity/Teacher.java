@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -23,8 +26,10 @@ public class Teacher {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonManagedReference
+    @BatchSize(size = 10)
     private List<Subject> subjects;
 
 // constructors, getters and setters
