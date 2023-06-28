@@ -8,5 +8,5 @@ import java.util.List;
 public interface SubjectService {
   
     List<SubjectDTO> getAllSubjectsByTeacherAndFromDateAndToDate(SubjectListDTO subjectListDTO);
-   
+    public String getSubjectandTeacherName(String name);
 }
