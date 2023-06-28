@@ -31,6 +31,4 @@ public class Teacher {
     @JsonManagedReference
     @BatchSize(size = 10)
     private List<Subject> subjects;
-
-// constructors, getters and setters
 }

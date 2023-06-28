@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,19 +29,7 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final ModelMapper modelMapper;
     private final EntityManager em;
-   
-
-
-        /**
-         *How to create a dynamic query in pring for paginated and filter API
-         * Hibernate Criteria is one of the ways through whih it is done.---rnD
-         * NAtive Query - M2.
-         * Calendar API
-         * LocalDate API -java8 feature.
-         */
-
-
-
+  
     private List<SubjectDTO> getSubjectDTOS(Page<Subject> subjectPage) {
         if(subjectPage.hasContent()) {
             List<Subject> subjectList = subjectPage.getContent();
@@ -91,5 +80,13 @@ public class SubjectServiceImpl implements SubjectService {
         Page<Subject> subjectPage= this.
                 findByDetails(subjectListDTO.getTeacherName(),from,to,p);
         return getSubjectDTOS(subjectPage);
+    }
+
+    @Override
+    public String getSubjectandTeacherName(String name) {
+        Subject subject = subjectRepository.findSubjectByName(name);
+        Subject subop = Optional.ofNullable(subject)
+                .orElseThrow(()->new NotFoundException("Subject not found "));
+        return "Teacher Name : " + subject.getTeacher().getName();
     }
 }
