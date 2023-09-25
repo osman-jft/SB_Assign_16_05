@@ -73,8 +73,8 @@ public class StudentController {
                 .build();
     }
 
-    @GetMapping("{target}")
-    public ResponseDTO<List<Pair<String>>> getStudentPairs(@PathVariable Double target) {
+    @GetMapping("/target")
+    public ResponseDTO<List<Pair<String>>> getStudentPairs(@RequestParam Double target) {
         return ResponseDTO.<List<Pair<String>>>builder()
                 .data(studentService.getStudentPairEqualsToSum(target)).message(Constants.SUCCESS_MSG)
                 .status(HttpStatus.OK.value())

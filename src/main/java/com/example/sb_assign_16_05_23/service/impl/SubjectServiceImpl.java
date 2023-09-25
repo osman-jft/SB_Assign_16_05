@@ -8,12 +8,10 @@ import com.example.sb_assign_16_05_23.repository.TeacherRepository;
 import com.example.sb_assign_16_05_23.service.SubjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final ModelMapper modelMapper;

@@ -7,9 +7,9 @@ import com.example.sb_assign_16_05_23.errors.BadRequestException;
 import com.example.sb_assign_16_05_23.errors.NotFoundException;
 import com.example.sb_assign_16_05_23.repository.StudentRepository;
 import com.example.sb_assign_16_05_23.service.StudentService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired
-    StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-    @Autowired
-    ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Override
     public List<StudentDTO> getAllStudents() {
@@ -99,7 +98,6 @@ public class StudentServiceImpl implements StudentService {
         };
         // Casting student class to StudentDTO
         return mapper.map(existingStudent, token.getType());
-
     }
 
     @Override
@@ -139,11 +137,10 @@ public class StudentServiceImpl implements StudentService {
         // Getting all the students form DB
         List<StudentDTO> studentDTOList = getAllStudents();
         // Checking Edge Case Here
-        Double sum = studentDTOList.stream().map(StudentDTO::getMarks).reduce((double) 0, Double::sum);
+        Double sum = studentDTOList.stream().mapToDouble(StudentDTO::getMarks).sum();
         if (target > sum) throw new BadRequestException("Target Should be less then 1200");
         List<Pair<String>> pairList = new ArrayList<>();
         Map<Double, String> map = new HashMap<>();
-
         for (StudentDTO student : studentDTOList) {
             Double remainTarget = target - student.getMarks();
             if (map.containsKey(remainTarget)) {
