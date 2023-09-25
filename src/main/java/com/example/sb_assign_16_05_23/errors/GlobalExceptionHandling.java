@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -56,6 +57,16 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
     // Exception handler for handling invalid sort field
     @ExceptionHandler({PropertyReferenceException.class, MappingException.class})
     protected ResponseEntity<ErrorResponse> handleInvalidSortField(RuntimeException exc) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("ErrorMessage", exc.getMessage());
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.BAD_REQUEST);
+        error.setMessages(errorMap);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidInputException(Exception exc) {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put("ErrorMessage", exc.getMessage());
         ErrorResponse error = new ErrorResponse();

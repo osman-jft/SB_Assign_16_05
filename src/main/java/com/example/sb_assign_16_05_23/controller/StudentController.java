@@ -1,5 +1,6 @@
 package com.example.sb_assign_16_05_23.controller;
 
+import com.example.sb_assign_16_05_23.dto.Pair;
 import com.example.sb_assign_16_05_23.dto.ResponseDTO;
 import com.example.sb_assign_16_05_23.dto.StudentDTO;
 import com.example.sb_assign_16_05_23.dto.ValidList;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/students")
@@ -72,5 +72,14 @@ public class StudentController {
                 .status(HttpStatus.OK.value())
                 .build();
     }
+
+    @GetMapping("/target")
+    public ResponseDTO<List<Pair<String>>> getStudentPairs(@RequestParam Double target) {
+        return ResponseDTO.<List<Pair<String>>>builder()
+                .data(studentService.getStudentPairEqualsToSum(target)).message(Constants.SUCCESS_MSG)
+                .status(HttpStatus.OK.value())
+                .build();
+    }
+
 }
 
